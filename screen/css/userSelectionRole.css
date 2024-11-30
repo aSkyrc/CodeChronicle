@@ -1,0 +1,155 @@
+
+.newuserlogo img{
+    border-radius: 400px;
+    width: 80px;
+    height: 80px;
+    border: 10px solid rgb(165, 165, 226);
+    margin: 0;
+    margin-left: 20px;
+    text-align: center;
+    position: fixed;
+    
+}
+
+.cdchroniclemess{
+    font-size: 14px;
+    font-weight: 100;
+    
+}
+
+.title{
+    padding: 30px;
+    margin-left: 100px;
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+}
+
+.cdcronicle label{
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0);
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  
+.modal-content {
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+    width: 88%;
+  }
+
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 140px;
+    right: 360px;
+  }
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+.open-btn {
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+.open-btn:hover {
+    background-color: #0056b3;
+  }
+
+.hinewuser{
+    padding: 20px;
+    padding-bottom: 50px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+.hinewuser h3{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+  }
+  
+.hinewuser h6{
+    font-size: 10px;
+  }
+
+.selected{
+    padding: 10px;
+    padding-top: 5px;
+  }
+
+.select input{
+   align-items: left;
+   margin-left: 70px;
+   margin-bottom: 20px;
+   justify-items: center;
+    
+  }
+  
+.selected label{
+    font-size: 1rem;
+    margin-left: 5px;
+  }
+
+.select .developers{
+    margin-left: 136px;
+  }
+
+.selected .exprog{
+    margin-left: 195px;
+  }
+
+.selected .others{
+    margin-left: 70px;
+  }
+
+.confirm{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    padding-bottom: 5px;
+  }
+  
+.confirm button{
+    padding: 10px;
+    border: 3px solid rgb(94, 94, 161);
+    background-color: rgba(98, 120, 165, 0.945);
+    width: 110px;
+    border-radius: 60px;
+    color: white;
+    transition: box-shadow 0.5s ease;
+    transition: transform 0.5s ease;
+  
+}
+
+.confirm:hover button{
+    transform: scale(1.01);
+    background-color: rgba(81, 101, 141, 0.945);
+  }
+  
+.Backendev{
+    margin-left: 150px;
+  }

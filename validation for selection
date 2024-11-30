@@ -1,0 +1,23 @@
+if ($user) {
+    $roleStatus = $user['role_status'] ?? false;
+    $interestStatus = $user['interest_status'] ?? false;
+
+    // Redirect to haha.php if BOTH statuses are false
+    if ($roleStatus === false && $interestStatus === false) {
+        header("Location: haha.php");
+        exit();
+    }
+}
+
+
+
+
+
+// Check if role_status and interest_status are true
+if ($user && isset($user['role_status'], $user['interest_status']) 
+    && $user['role_status'] === true 
+    && $user['interest_status'] === true) {
+    // Redirect to haha.php if both conditions are true
+    header("Location: haha.php");
+    exit();
+}

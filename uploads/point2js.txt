@@ -1,0 +1,41 @@
+  const dynamicContent = [];
+    
+    // Capture content of dynamically added elements
+    elementOrder.forEach(item => {
+        const element = document.getElementById(item.id);
+        let content = '';
+
+        // For textareas (description and blog descriptions)
+        if (element && element.querySelector('textarea')) {
+            content = element.querySelector('textarea').value;
+        }
+        // For image files
+        else if (element && element.querySelector('input[type="file"]')) {
+            content = element.querySelector('input[type="file"]').files[0] ? element.querySelector('input[type="file"]').files[0].name : '';
+        }
+
+        // Add the content and other info to dynamicContent
+        dynamicContent.push({ id: item.id, type: item.type, content: content });
+    });
+
+    // Add dynamic content as hidden inputs to the form
+    dynamicContent.forEach(item => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = `${item.type}[]`;  // Use the type (blogDescription, horizontalDescription, etc.)
+        input.value = item.content;
+        this.appendChild(input);
+    });
+
+
+
+Logo
+Code Chronicle
+Search for something...
+Notifications
+Home
+Bookmarks
+Users
+Profile Picture
+
+Fatal error: Uncaught TypeError: Cannot access offset of type string on string in C:\xampp\htdocs\Code Chronicle\user\edit-blog-post.php:173 Stack trace: #0 {main} thrown in C:\xampp\htdocs\Code Chronicle\user\edit-blog-post.php on line 173
