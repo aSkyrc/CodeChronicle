@@ -15,7 +15,7 @@
     overflow-y: auto;
     margin: 0 auto; /* Center the content */
     max-width: 100%; /* Adjust width for readability */
-    max-height: calc(90vh - 20px); /* Ensure the content container has a limit on height */
+    max-height: calc(100vh - 20px); /* Ensure the content container has a limit on height */
   }
 
   .homepage-sidebar {
@@ -151,35 +151,20 @@
   .post-card {
     background-color: #fafafa;
     border: 1px solid #E3E4E5;
-    border-radius: 3px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     align-items: center;
     width: calc(42.5% - 40px); /* Use calc to subtract padding from 50% */
     height: 220px;
-    margin: 10px auto;
+    margin: 0 auto;
+    margin-bottom: 20px;
     overflow: hidden;
     justify-content: space-between;
   }
 
-  .text-content {
-    color: #282829;
-    line-height: 0.5;
-    padding-left: 30px;
-    position: relative;
-    font-weight: bold;
-  }
-
-  .text-content p{
-    margin-top: 30px;
-    font-size: 30px;
-    padding-left: 10px;
-    margin-bottom: 15px;
-    color: #000000;
-    font-family: 'Lalezar';
-  }
-
+  
   .post-card img {
     width: 38%;
     height: 100%;
@@ -187,17 +172,31 @@
     border-radius: 0 8px 8px 0;
   }
 
-  .homepage-content-container {
-      margin: 0;
+  .homepage-text-content {
+    color: #282829;
+    line-height: 0.5;
+    padding-left: 30px;
+    position: relative;
+    font-weight: bold;
   }
 
+  .homepage-text-content p{
+    margin-top: 10px;
+    font-size: 30px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    color: #000000;
+    font-family: 'Lalezar';
+  }
+  
   .tutorial {
-    font-size: 10px;
+    font-size: 8px;
     margin-left: 50px;
     font-family: 'Lalezar';
     color: #282829;
-
-    margin-bottom: 30px;
+    text-align: justify; /* Makes the text justified */
+    margin-right: 10px;
+   
   }
 
   .homepage-user-info {
@@ -218,6 +217,7 @@
 .user-info {
     display: flex;
     flex-direction: column;  /* Align text items vertically */
+    margin-bottom: 10px;
 }
 
 .user-name-rating {
@@ -260,7 +260,7 @@
     width: 25px;
     height: 25px;
     border-radius: 1px;
-
+    cursor: pointer;
   }
 
   .continue-button {
@@ -389,3 +389,9 @@
     margin-top: 10px;
     cursor: pointer;
 }
+
+.savedblog {
+  text-align: center;
+  font-size: 30px;
+}
+

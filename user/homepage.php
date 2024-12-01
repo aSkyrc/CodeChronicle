@@ -17,7 +17,7 @@ $userGoogleData = $googleUsersCollection->findOne(['email' => $user_email]);
 $userData = $usersCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($user_id)]);
 
 // Fetch user profile data based on user_id (from user-profile collection)
-$userProfileData = $userProfileCollection->findOne(['user_id' => $user_id]);  // Use 'user_id' from user-profile collection
+$userProfileData = $userProfileCollection->findOne(['user_id' => $user_id]); // Use 'user_id' from user-profile collection
 
 // If no user profile data is found, display an error and exit
 if (!$userProfileData) {
@@ -29,12 +29,12 @@ if (!$userProfileData) {
 if ($userGoogleData) {
     // For Google users
     $username = $userGoogleData['username'] ?? 'Guest'; // Fallback if username is not set
-    $profilePicture = $userGoogleData['picture'] ?? '../logos/userDefault.png';  // Google picture or default to 'CClogo.jpg'
+    $profilePicture = $userGoogleData['picture'] ?? '../logos/userDefault.png'; // Google picture or default to 'CClogo.jpg'
     $createdAt = $userGoogleData['created_at'] ?? time();
 } elseif ($userData) {
     // For regular users
     $username = $userData['username'] ?? 'Guest'; // Fallback if username is not set
-    $profilePicture = $userData['picture'] ?? '../logos/userDefault.png';  // Picture from uploads directory, default to 'CClogo.jpg'
+    $profilePicture = $userData['picture'] ?? '../logos/userDefault.png'; // Picture from uploads directory, default to 'CClogo.jpg'
     $createdAt = $userData['created_at'] ?? time();
 } else {
     // If no user data is found in both collections
@@ -48,10 +48,16 @@ $interests = $userProfileData['interest'] ?? []; // Interests from user-profile
 
 // Convert BSONArray to PHP array
 $interestsArray = iterator_to_array($interests, false);
-$formattedDate = date('F Y', $createdAt); // Format creation date
 
-// Fetch blog posts from blog collection
-$blogs = $blogCollection->find();
+// Create the filter query for the blogs
+$filter = [
+    'category' => ['$in' => $interestsArray] // Match categories with user interests
+];
+
+// Fetch blog posts that match the user's interests
+$blogs = $blogCollection->find($filter);
+
+$shortDescription = isset($blog['shortDescription']) ? $blog['shortDescription'] : '';
 ?>
 
 <body>
@@ -85,9 +91,9 @@ $blogs = $blogCollection->find();
                     </ul>      
                 </div>
             </aside>
-
+            <?php foreach ($blogs as $blog): ?>
             <div class="homepage-center-content" id="post-container">
-                <?php foreach ($blogs as $blog): ?>
+            
                     <?php
                         // Fetch the user data for each blog author based on the user_id
                         $authorId = $blog['user_id']; // Assuming 'user_id' is stored in each blog post
@@ -124,10 +130,21 @@ $blogs = $blogCollection->find();
                             </div>
 
                             <div class="save">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3916/3916593.png">
+                                <img 
+                                    src="https://cdn-icons-png.flaticon.com/512/3916/3916593.png" 
+                                    data-id="<?php echo htmlspecialchars((string)$blog['_id']); ?>" 
+                                    alt="Save Blog Icon"
+                                >
+                                <!-- Hidden button -->
+                                <button 
+                                    style="display: none;" 
+                                    data-id="<?php echo htmlspecialchars((string)$blog['_id']); ?>" 
+                                    onclick="saveBlog(this)">
+                                    Save Blog
+                                </button>
                             </div>
 
-                            <div class="text-content">
+                            <div class="homepage-text-content">
                                 <p><?php echo htmlspecialchars($blog['title']); ?></p>
                             </div>
 
@@ -175,46 +192,6 @@ $blogs = $blogCollection->find();
     </div>
 </div>
 
-<script>
-        function openModal() {
-    const modal = document.getElementById("homepage-interest-modal");
-    modal.style.display = "block";
-}
-
-function closeModal() {
-    const modal = document.getElementById("homepage-interest-modal");
-    modal.style.display = "none";
-}
-    // This will trigger the form submission (if needed)
-    function addInterest() {
-        const selectedInterests = [];
-        const checkboxes = document.querySelectorAll('input[name="interest[]"]:checked');
-        checkboxes.forEach(function(checkbox) {
-            selectedInterests.push(checkbox.value);
-        });
-
-        if (selectedInterests.length > 0) {
-            // Send the selected interests to the server via AJAX
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "addInterest.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    alert('Interests added successfully!');
-                    location.reload(); // Optionally reload the page to reflect the updates
-                } else {
-                    alert('Error adding interests.');
-                }
-            };
-
-            // Send interests as form data, not JSON
-            xhr.send("interest[]=" + selectedInterests.join("&interest[]=")); // Correct format for sending an array
-        } else {
-            alert("Please select at least one interest.");
-        }
-    }
-
-</script>
+<script src="../screen/javascript/home-saved-function.js"></script>
 </body>
 </html>

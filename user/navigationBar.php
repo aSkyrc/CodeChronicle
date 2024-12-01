@@ -1,7 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/connection.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/session-config.php';
-
 // Get the user profile collections
 $usersCollection = $collections['users']; // Regular users collection
 $googleUsersCollection = $db->selectCollection('google-users'); // Google users collection
@@ -23,7 +22,7 @@ if ($user_id) {
         $isGoogleUser = true; // Mark as Google user
     }
 
-    // Determine profile picture
+    // Determine profile picture    
     if ($usersData) {
         if ($isGoogleUser) {
             // Use the `picture` directly for Google users
@@ -38,6 +37,7 @@ if ($user_id) {
         }
     }
 }
+
 ?>
 
 
@@ -54,7 +54,8 @@ if ($user_id) {
     <link rel="stylesheet" href="../screen/css/navigationBar.css">
     <link rel="stylesheet" href="../screen/css/BLOG.css">
     <link rel="stylesheet" href="../screen/css/SETTINGS.css">
-    <link rel="stylesheet" href="../screen/css/homepage.css">
+    <link rel="stylesheet" href="../screen/css/HOMEPAGE.css">
+    <link rel="stylesheet" href="../screen/css/VIEWBLOG.css">
     <title>Code Chronicle</title>
 </head>
 <body>
