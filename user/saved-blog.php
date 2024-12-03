@@ -29,7 +29,7 @@ if (!$userProfileData) {
 if ($userGoogleData) {
     // For Google users
     $username = $userGoogleData['username'] ?? 'Guest'; // Fallback if username is not set
-    $profilePicture = $userGoogleData['picture'] ?? '../logos/userDefault.png'; // Google picture or default to 'CClogo.jpg'
+    $profilePicture = $userGoogleData['picture'] ?? '../logos/userDefault.png'; // Google picture or default
     $createdAt = $userGoogleData['created_at'] ?? time();
 } elseif ($userData) {
     // For regular users
@@ -109,17 +109,27 @@ if (!empty($savedBlogIds)) {
             <div class="homepage-center-content" id="post-container" style="margin-left: 20px;">
                 <?php foreach ($blogs as $blog): ?>
                     <?php
-                        // Fetch user details as in the original code
+                        // Check if the blog's author is a Google user or a regular user
                         $authorId = $blog['user_id'];
-                        $authorData = $usersCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($authorId)]);
-                        $authorName = $authorData['username'] ?? 'Guest';
-                        $authorPicture = $authorData['picture'] ?? '../logos/userDefault.png';
-                        $authorPicturePath = '../uploads/' . basename($authorPicture);
+                        $authorGoogleData = $googleUsersCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($authorId)]);
+                        if ($authorGoogleData) {
+                            // If the author is a Google user
+                            $authorName = $authorGoogleData['username'] ?? 'Guest';
+                            $authorPicture = $authorGoogleData['picture'] ?? '../logos/userDefault.png';
+                        } else {
+                            // Otherwise, fetch regular user data
+                            $authorData = $usersCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($authorId)]);
+                            $authorName = $authorData['username'] ?? 'Guest';
+                            $authorPicture = '../uploads/' . ($authorData['picture'] ?? 'userDefault.png');
+                        }
+
+                        // Ensure picture path is correct
+                        $authorPicturePath = htmlspecialchars($authorPicture);
                     ?>
-                    <div class="post-card" style="margin: 0 auto; margin-bottom: 20px; margin-top: 40px">
+                    <div class="post-card" data-id="<?php echo htmlspecialchars((string)$blog['_id']); ?>" style="margin: 0 auto; margin-bottom: 20px; margin-top: 40px">
                         <div class="homepage-content-container">
                             <div class="homepage-user-info">
-                                <img src="<?php echo htmlspecialchars($authorPicturePath); ?>" alt="User Image">
+                                <img src="<?php echo $authorPicturePath; ?>" alt="User Image">
                                 <div class="user-info">
                                     <div class="user-name-rating">
                                         <div class="user-name"><?php echo htmlspecialchars($authorName); ?> <span class="dot">•</span></div>
@@ -141,6 +151,7 @@ if (!empty($savedBlogIds)) {
                         </div>
                         <img src="<?php echo htmlspecialchars($blog['thumbnailPath']); ?>" alt="Post Image">
                     </div>
+
                 <?php endforeach; ?>
                 <div class="homepage-sidebar-right">
                  <img src="../logos/blogcontent.jpg">
@@ -150,7 +161,6 @@ if (!empty($savedBlogIds)) {
     </div>
 
     <!-- Modal -->
-<!-- Modal -->
 <div id="homepage-interest-modal" class="homepage-modal">
     <div class="homepage-modal-content">
         <h3>What do you want to add?</h3>
@@ -173,6 +183,26 @@ if (!empty($savedBlogIds)) {
         </form>         
     </div>
 </div>
-<script src="../screen/javascript/home-saved-function.js"></script>
+<script src="../screen/javascript/HOME-saved-function.js"></script>
+<script>
+    // Function to confirm the save/unsave action for blogs
+function confirmUnsaveBlog(blogId) {
+    const confirmation = confirm("Are you sure you want to unsave this blog?");
+
+    if (confirmation) {
+        // Redirect to unsavedblog.php with the blog ID as a GET parameter
+        window.location.href = 'addUnsavedBlog.php?blog_id=' + blogId;
+    }
+}
+
+// Attach click event to save buttons
+document.querySelectorAll('.save img').forEach((saveImg) => {
+    saveImg.addEventListener('click', function() {
+        const blogId = this.closest('.post-card').getAttribute('data-id'); // Get blog ID from data-id attribute
+        confirmUnsaveBlog(blogId); // Call the confirmation function with the blog ID
+    });
+});
+
+</script>
 </body>
 </html>

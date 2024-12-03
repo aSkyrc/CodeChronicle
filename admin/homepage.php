@@ -6,8 +6,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/admin-sessi
 $usersCollection = $db->selectCollection('users');  // Accessing the 'users' collection
 $googleUsersCollection = $db->selectCollection('google-users');  // Accessing the 'google-users' collection
 
-// Get the total number of users (from 'users' and 'google-users' collections)
-$totalUsers = $usersCollection->countDocuments() + $googleUsersCollection->countDocuments();
+// Get the total number of users with otp-status true (from 'users' and 'google-users' collections)
+$totalUsers = $usersCollection->countDocuments(['otp-status' => true]) + $googleUsersCollection->countDocuments();
 
 // Get total number of blogs (from 'blog' collection)
 $blogCollection = $db->selectCollection('blog');  // Accessing the 'blog' collection
@@ -27,7 +27,6 @@ $allCategories = [
     "Career and Networking"
 ];
 
-
 $weeklyBlogCounts = [];
 
 // Loop through each predefined category
@@ -35,7 +34,6 @@ foreach ($allCategories as $category) {
     // Count the number of blogs in each category created in the current week (Monday to Sunday)
     $count = $blogCollection->countDocuments([
         'category' => $category
-
     ]);
     
     // Store the count for the category (even if it's zero)
@@ -62,6 +60,7 @@ $categoriesJson = json_encode($allCategories); // This ensures all categories ar
 $weeklyBlogCountsJson = json_encode(array_values($weeklyBlogCounts)); // This gives only the counts in the correct order
 $categoryCountsJson = json_encode($categoryCounts ?? []); // Added this for the pie chart
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -110,30 +109,27 @@ $categoryCountsJson = json_encode($categoryCounts ?? []); // Added this for the 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         var ctxLine = document.getElementById('lineChart').getContext('2d');
-        var lineChart = new Chart(ctxLine, {
-            type: 'line',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                datasets: [
-                    {
-                        label: 'User Registrations This Year',
-                        data: [<?php echo implode(',', array_map(function ($month) use ($usersCollection, $currentYear) {
-                            $start = new MongoDB\BSON\UTCDateTime(strtotime("{$currentYear}-{$month}-01 00:00:00") * 1000);
-                            $end = new MongoDB\BSON\UTCDateTime(strtotime("{$currentYear}-{$month}-31 23:59:59") * 1000);
-                            return $usersCollection->countDocuments(['created_at' => ['$gte' => $start, '$lte' => $end]]);
-                        }, range(1, 12))); ?>],
-                        borderColor: '#6c63ff',
-                        fill: false
+            var lineChart = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: <?php echo $categoriesJson; ?>, // Categories as labels
+                    datasets: [
+                        {
+                            label: 'Blog Posts by Category',
+                            data: <?php echo $weeklyBlogCountsJson; ?>, // Weekly blog counts for each category
+                            borderColor: '#6c63ff',
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Blog Posts by Category'
                     }
-                ]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'User Registrations Over the Year'
                 }
-            }
-        });
+            });
+
 
         var ctxBar = document.getElementById('barChart').getContext('2d');
         var barChart = new Chart(ctxBar, {

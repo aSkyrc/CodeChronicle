@@ -108,7 +108,8 @@ body {
 
 
 .delete-icon {
-    margin-left: 505px; /* Push the delete icon to the far right of the row */
+    text-align: right;
+    justify-content: right;
     font-size: 35px; /* Size of the delete icon */
     color: #ff4d4d; /* Color of the delete icon */
     text-decoration: none; /* Remove underline */
@@ -122,6 +123,7 @@ body {
 
 
 .community-visit-username span {
+    position: relative;
     margin-top: 5px;
     font-size: 18px;
   

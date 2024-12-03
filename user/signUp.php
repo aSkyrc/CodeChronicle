@@ -16,8 +16,9 @@ if (!$connectionStatus) {
     die("Failed to connect to the database. Please try again later.");
 }
 
-// Get the `users` collection
+// Get the `users` and `google-users` collections
 $usersCollection = $collections['users'];
+$googleUsersCollection = $collections['google-users']; // New collection for Google users
 
 // Initialize error messages
 $usernameErr = $emailErr = $passwordErr = $confirmPasswordErr = $otpErr = "";
@@ -50,9 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $usernameErr = "Username is already taken.";
             }
 
-            // Check if email exists with otp-status true
+            // Check if email exists with otp-status true in users collection
             $existingEmail = $usersCollection->findOne(['email' => $email, 'otp-status' => true]);
-            if ($existingEmail) {
+            // Check if email exists in google-users collection
+            $existingGoogleEmail = $googleUsersCollection->findOne(['email' => $email]);
+            if ($existingEmail || $existingGoogleEmail) {
                 $emailErr = "Email is already taken.";
             }
 
@@ -60,10 +63,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (empty($usernameErr) && empty($emailErr)) {
                 $existingUser = $usersCollection->findOne(['username' => $username, 'otp-status' => false]);
                 $existingEmail = $usersCollection->findOne(['email' => $email, 'otp-status' => false]);
+                $existingGoogleEmail = $googleUsersCollection->findOne(['email' => $email]);
 
                 if ($existingUser && $existingEmail) {
                     $usernameErr = "Username and email are already taken.";
                     $emailErr = "Username and email are taken.";
+                }
+
+                // If email exists with otp-status false in users collection or google-users collection, delete the old record
+                if ($existingEmail && $existingEmail['otp-status'] === false) {
+                    $usersCollection->deleteOne(['email' => $email, 'otp-status' => false]);
+                }
+
+                if ($existingGoogleEmail) {
+                    $googleUsersCollection->deleteOne(['email' => $email]);
                 }
             }
 
@@ -101,7 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'otp-status' => false
                 ];
                 $usersCollection->insertOne($userData);
-                
 
                 // Send OTP to the user's email
                 if (sendOTPEmail($email, $otp)) {

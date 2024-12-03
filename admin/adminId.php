@@ -15,7 +15,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/admin-sessi
     <title>Admin</title>
     <link rel="shortcut icon" href="../logos/CClogo.jpg" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="VisitCommunity.css">
+    <link rel="stylesheet" href="visitCommunity.css">
     <link rel="stylesheet" href="viewBlog.css">
     <link rel="stylesheet" href="VISIT-profile.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

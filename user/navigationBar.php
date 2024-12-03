@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/connection.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/session-config.php';
+
 // Get the user profile collections
 $usersCollection = $collections['users']; // Regular users collection
 $googleUsersCollection = $db->selectCollection('google-users'); // Google users collection
@@ -27,7 +28,7 @@ if ($user_id) {
         if ($isGoogleUser) {
             // Use the `picture` directly for Google users
             if (isset($usersData['picture']) && !empty($usersData['picture'])) {
-                $profilePicture = $usersData['picture'];
+                                $profilePicture = $usersData['picture'];
             }
         } else {
             // Prepend `../uploads/` for regular users
@@ -38,8 +39,14 @@ if ($user_id) {
     }
 }
 
-?>
+// Fetch notifications for the logged-in user
+$notificationsCollection = $db->selectCollection('notifications'); // Notifications collection
+$notifications = $notificationsCollection->find(
+    ['user_id' => new MongoDB\BSON\ObjectId($user_id)], // Match by user ID
+    ['sort' => ['created_at' => -1], 'limit' => 5] // Sort by created_at in descending order, limit to 5
+);
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,13 +83,22 @@ if ($user_id) {
         </form>
     </div>
 
-
     <div class="icons">
         <!-- Notification Icon -->
         <div class="icon" id="notificationIcon">
             <img src="https://cdn-icons-png.flaticon.com/512/3917/3917226.png" alt="Notifications">
             <div class="dropdown" id="notificationDropdown">
                 <h5>Notifications</h5>
+                <?php if ($notifications->isDead()) : ?>
+                    <p style="text-align: center;">No notifications</p>
+                <?php else : ?>
+                    <?php foreach ($notifications as $notification) : ?>
+                        <div class="notification-item">
+                            <p><?php echo htmlspecialchars($notification['message']); ?></p>
+                            <small><?php echo $notification['created_at']->toDateTime()->format('Y-m-d H:i:s'); ?></small>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -115,5 +131,6 @@ if ($user_id) {
     </div>
 </div>
 
-    <script src="../screen/javascript/NavigationBar.js"></script>
-
+<script src="../screen/javascript/NavigationBar.js"></script>
+</body>
+</html>

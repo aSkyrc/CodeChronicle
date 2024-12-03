@@ -52,8 +52,11 @@ $interests = isset($userProfileData['interest']) ? iterator_to_array($userProfil
 $isInterested = in_array($communityName, $interests);
 
 
-// Fetch blog posts that match the filter
-$blogsCursor = $blogCollection->find($filter);
+// Fetch blog posts that match the filter and sort by 'createdAt' in descending order
+$blogsCursor = $blogCollection->find(
+    $filter,
+    ['sort' => ['createdAt' => -1]] // Sort by 'createdAt' in descending order
+);
 
 // Convert cursor to an array for easier handling
 $blogs = iterator_to_array($blogsCursor);
@@ -89,14 +92,26 @@ $blogs = iterator_to_array($blogsCursor);
                 <?php else: ?>
                     <?php foreach ($blogs as $blog): ?>
                     <div class="community-visit-blogs-card">
-                        <?php
+                        
+                    <?php
                         // Fetch the user data for each blog author based on the user_id
                         $authorId = $blog['user_id']; // Assuming 'user_id' is stored in each blog post
-                        $authorData = $usersCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($authorId)]);
-                        $authorName = $authorData['username'] ?? 'Guest';
-                        $authorPicture = $authorData['picture'] ?? '../logos/userDefault.png';
-                        $authorPicturePath = '../uploads/' . basename($authorPicture);
-                        ?>
+                        // Check if the author is a Google user
+                        $authorGoogleData = $googleUsersCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($authorId)]);
+                        // If it's a Google user, use their Google data
+                        if ($authorGoogleData) {
+                            $authorName = $authorGoogleData['username'] ?? 'Guest';
+                            $authorPicture = $authorGoogleData['picture'] ?? '../logos/userDefault.png'; // Google user picture
+                        } else {
+                            // Otherwise, fetch regular user data
+                            $authorData = $usersCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($authorId)]);
+                            $authorName = $authorData['username'] ?? 'Guest';
+                            $authorPicture = '../uploads/' . ($authorData['picture'] ?? 'userDefault.png'); // Regular user picture
+                        }
+
+                        // Ensure picture path is correct
+                        $authorPicturePath = htmlspecialchars($authorPicture);
+                    ?>
                         <div class="community-visit-blog-card">
                             <div class="community-visit-card-header">
                                 <div class="community-visit-user-info">
@@ -117,7 +132,7 @@ $blogs = iterator_to_array($blogsCursor);
                             <div class="community-visit-card-body">
                                 <p class="community-title-content"><?php echo htmlspecialchars($blog['title']); ?></p>
                                 <p class="community-short-content-description"><?php echo htmlspecialchars($blog['shortDescription']); ?></p>
-                                <button class="community-visit-continue" onclick="location.href='communityCyberSecurityVisitBlog.php?_id=<?php echo htmlspecialchars((string)$blog['_id']); ?>';">Continue reading...</button>
+                                <button class="community-visit-continue" onclick="location.href='communityVisitBlog.php?_id=<?php echo htmlspecialchars((string)$blog['_id']); ?>';">Continue reading...</button>
                             </div>
                         </div>
                         <div class="community-visit-thumbnail">

@@ -29,36 +29,40 @@ $userId = $_GET['user_id'] ?? null;
 
 if ($userId) {
     try {
-        // Fetch user information from the correct collection
         $userCollection = $db->users;
         $author = $userCollection->findOne(['_id' => new ObjectId($userId)]);
 
-        // If not found, check the 'google-users' collection
         if (!$author) {
+            // Check the 'google-users' collection
             $userCollection = $db->selectCollection('google-users');
             $author = $userCollection->findOne(['_id' => new ObjectId($userId)]);
         }
 
         if ($author) {
-            // Get user profile picture, username, rating, and created_at/createdAt
-            $authorPicture = '../uploads/' . ($author['picture'] ?? 'default.jpg'); // Default profile picture
+            // Handle the author's profile picture
+            if (isset($author['picture']) && filter_var($author['picture'], FILTER_VALIDATE_URL)) {
+                // If the picture is a URL, use it directly
+                $authorPicture = $author['picture'];
+            } else {
+                // Fallback to the default uploads directory or a default picture
+                $authorPicture = '../uploads/' . ($author['picture'] ?? 'default.jpg');
+            }
+
             $username = $author['username'] ?? 'Unknown Author';
             $userRating = getUserRating($author['user_rating'] ?? null);
 
-            // Check for 'created_at' or 'createdAt' field and format it
-            $createdAt = isset($author['created_at']) ? formatDate($author['created_at']) : (isset($author['createdAt']) ? formatDate($author['createdAt']) : 'Unknown date');
+            $createdAt = isset($author['created_at']) ? formatDate($author['created_at']) :
+                         (isset($author['createdAt']) ? formatDate($author['createdAt']) : 'Unknown date');
 
-            // Check for role in the 'user-profile' collection if it's missing in the author data
             $profileCollection = $db->selectCollection('user-profile');
             $userProfile = $profileCollection->findOne(['user_id' => new ObjectId($userId)]);
 
             if ($userProfile) {
-                $userRole = $userProfile['role'] ?? 'No Role'; // Fetch role from user-profile collection
+                $userRole = $userProfile['role'] ?? 'No Role';
                 $about = is_array($userProfile['about']) ? implode(', ', $userProfile['about']) : (string)($userProfile['about'] ?? 'No about info available');
                 $workCredentials = $userProfile['workCredentials'] ?? [];
                 $educationCredentials = $userProfile['educationCredentials'] ?? [];
             } else {
-                // Default values if no user profile data is found
                 $userRole = 'No Role';
                 $about = 'No about info available';
                 $workCredentials = [];
@@ -81,7 +85,10 @@ if ($userId) {
 $posts = [];
 try {
     $postsCollection = $db->selectCollection('blog'); // Adjust to your collection name
-    $postsCursor = $postsCollection->find(['user_id' => new ObjectId($userId)]); // Query by user_id
+    $postsCursor = $postsCollection->find(
+        ['user_id' => new ObjectId($userId)], // Query by user_id
+        ['sort' => ['createdAt' => -1]] // Sort by 'createdAt' in descending order
+    );
 
     // Convert cursor to array and process each post
     foreach ($postsCursor as $post) {
@@ -89,6 +96,7 @@ try {
         $formattedPostDate = isset($post['createdAt']) ? formatDate($post['createdAt']) : 'Unknown date';
 
         $posts[] = [
+            '_id' => (string)$post['_id'], // Include the post ID
             'createdAt' => $formattedPostDate,
             'category' => $post['category'] ?? 'Uncategorized',
             'title' => $post['title'] ?? 'Untitled',
@@ -159,7 +167,7 @@ try {
                                 </div>
                                 <h2><?php echo htmlspecialchars($post['title']); ?></h2>
                                 <p><?php echo htmlspecialchars($post['shortDescription']); ?></p>
-                                <button class="visit-profile-read-more">Continue reading...</button>
+                                <button class="visit-profile-read-more" onclick="location.href='blog-post.php?_id=<?php echo htmlspecialchars((string)($post['_id'] ?? '')); ?>';">Continue reading...</button>
                             </div>
                             <!-- Post Thumbnail -->
                             <div class="visit-profile-post-thumbnail">

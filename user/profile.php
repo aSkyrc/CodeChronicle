@@ -13,17 +13,19 @@ if (preg_match('/^[a-f0-9]{24}$/', $user_id)) {
 }
 
 // Access the collections
-$userCollection = $db->selectCollection('users'); // or 'google-users' if applicable
+$userCollection = $db->selectCollection('users'); // Default to 'users' collection
 $profileCollection = $db->selectCollection('user-profile');
 $blogCollection = $db->selectCollection('blog');
 
-// Fetch user data from the 'users' or 'google-users' collection
+// Fetch user data from the 'users' collection
 $userData = $userCollection->findOne(['_id' => $user_id]);
 
 // If user is not found in 'users', check 'google-users' collection
+$isGoogleUser = false;
 if (!$userData) {
     $userCollection = $db->selectCollection('google-users');
     $userData = $userCollection->findOne(['_id' => $user_id]);
+    $isGoogleUser = true; // Mark as a Google user
 }
 
 // Fetch user profile data (role, bio, credentials)
@@ -33,8 +35,16 @@ $userProfile = $profileCollection->findOne(['user_id' => $user_id]);
 $userBlogsCursor = $blogCollection->find(['user_id' => $user_id]);
 $userBlogs = iterator_to_array($userBlogsCursor);
 
-// Prepare the data for the user profile
-$authorPicture = '../uploads/' . ($userData['picture'] ?? 'default.jpg');
+// Determine the author's picture
+if ($isGoogleUser && isset($userData['picture']) && filter_var($userData['picture'], FILTER_VALIDATE_URL)) {
+    // Use Google user's profile picture if it is a valid URL
+    $authorPicture = $userData['picture'];
+} else {
+    // Default to local profile picture for 'users' collection
+    $authorPicture = '../uploads/' . ($userData['picture'] ?? 'default.jpg');
+}
+
+// Prepare other profile details
 $username = $userData['username'] ?? 'Unknown User';
 $userRating = isset($userData['user_rating']) ? $userData['user_rating'] : 0;
 $userRole = $userProfile['role'] ?? 'No Role';
@@ -47,21 +57,28 @@ $about = isset($userProfile['about'])
 $workCredentials = $userProfile['workCredentials'] ?? [];
 $educationCredentials = $userProfile['educationCredentials'] ?? [];
 
-
 // Function to format the date from Unix timestamp (in seconds)
 function formatDate($timestamp) {
     if (is_numeric($timestamp) && $timestamp > 0) {
-        // Convert timestamp from seconds to a readable date format (j F Y = Day Month Year)
         return date('j F Y', $timestamp); // Unix timestamps are in seconds
     } else {
         return 'Unknown date';  // Fallback if the timestamp is invalid or missing
     }
 }
 
-// Format the 'created_at' timestamp for the user (in "Day Month Year" format)
+// Format the 'created_at' timestamp for the user
 $createdAt = isset($userData['created_at']) ? formatDate($userData['created_at']) : 'Unknown date';
 
+// Fetch blog posts from the 'blog' collection, sorted by 'createdAt' in descending order
+$userBlogsCursor = $blogCollection->find(
+    ['user_id' => $user_id], 
+    ['sort' => ['createdAt' => -1]] // Sort by 'createdAt' field in descending order
+);
+$userBlogs = iterator_to_array($userBlogsCursor);
+
+
 ?>
+
 
 <body>
     <a href="javascript:history.back()" class="back-button">←</a>
@@ -111,48 +128,46 @@ $createdAt = isset($userData['created_at']) ? formatDate($userData['created_at']
                 <button class="profile-button-blog" onclick="location.href='blog.php';" style="margin-bottom: 10px; margin-top: 20px">Post</button>
             </div>
             <div class="visit-profile-posts">
-                <?php if (!empty($userBlogs)): ?>
-                    <?php foreach ($userBlogs as $post): ?>
-                        <?php
-                            // Format the 'createdAt' timestamp for blog posts (in "Day Month Year" format)
-                            $formattedPostDate = isset($post['createdAt']) ? formatDate($post['createdAt']) : 'Unknown date';
+                    <?php if (!empty($userBlogs)): ?>
+                        <?php foreach ($userBlogs as $post): ?>
+                            <?php
+                                // Format the 'createdAt' timestamp for blog posts (in "Day Month Year" format)
+                                $formattedPostDate = isset($post['createdAt']) ? formatDate($post['createdAt']) : 'Unknown date';
 
-                            // Extract the blog post ID (convert to string if necessary for ObjectId)
-                            $postId = (string)$post['_id'];
-                        ?>
-                        <div class="visit-profile-post">
-                            <!-- Post Content -->
-                            <div class="visit-profile-post-content">
-                                <div class="visit-profile-meta">
-                                    <span><?php echo htmlspecialchars($formattedPostDate); ?></span><span>•</span>
-                                    <span><?php echo htmlspecialchars($post['category'] ?? 'Uncategorized'); ?></span>
+                                // Extract the blog post ID (convert to string if necessary for ObjectId)
+                                $postId = (string)$post['_id'];
+                            ?>
+                            <div class="visit-profile-post">
+                                <!-- Post Content -->
+                                <div class="visit-profile-post-content">
+                                    <div class="visit-profile-meta">
+                                        <span><?php echo htmlspecialchars($formattedPostDate); ?></span><span>•</span>
+                                        <span><?php echo htmlspecialchars($post['category'] ?? 'Uncategorized'); ?></span>
+                                    </div>
+
+                                    <!-- Edit and Delete Icons -->
+                                    <div class="post-actions">
+                                        <a href="edit-blog-post.php?_id=<?php echo $postId; ?>" class="edit-icon">✏️</a>
+                                        <a href="deleteBlog.php?_id=<?php echo $postId; ?>" 
+                                            class="delete-icon" 
+                                            onclick="return confirm('Are you sure you want to delete your blog?');">🗑️</a>
+                                    </div>
+
+                                    <h2><?php echo htmlspecialchars($post['title'] ?? 'Untitled'); ?></h2>
+                                    <p><?php echo htmlspecialchars($post['shortDescription'] ?? 'No description available.'); ?></p>
+                                    <button class="visit-profile-read-more" onclick="location.href='blog-post.php?_id=<?php echo htmlspecialchars((string)$post['_id']); ?>';">Continue reading...</button>
                                 </div>
 
-                                <!-- Edit and Delete Icons -->
-                                <div class="post-actions">
-                                    <!-- Add the blog ID to the edit link -->
-                                    <a href="edit-blog-post.php?_id=<?php echo $postId; ?>" class="edit-icon">✏️</a>
-                                    <!-- Add the blog ID to the delete link -->
-                                    <a href="deleteBlog.php?_id=<?php echo $postId; ?>" 
-                                        class="delete-icon" 
-                                        onclick="return confirm('Are you sure you want to delete your blog?');">🗑️</a>
+                                <!-- Post Thumbnail -->
+                                <div class="visit-profile-post-thumbnail">
+                                    <img src="<?php echo htmlspecialchars($post['thumbnailPath'] ?? '../uploads/default-thumbnail.jpg'); ?>" alt="Post Thumbnail" width="500px" height="450px">
                                 </div>
-
-                                <h2><?php echo htmlspecialchars($post['title'] ?? 'Untitled'); ?></h2>
-                                <p><?php echo htmlspecialchars($post['shortDescription'] ?? 'No description available.'); ?></p>
-                                <button class="visit-profile-read-more" onclick=" location.href='blog-post.php?_id=<?php echo htmlspecialchars((string)$post['_id']); ?>';">Continue reading...</button>
                             </div>
-
-                            <!-- Post Thumbnail -->
-                            <div class="visit-profile-post-thumbnail">
-                                <img src="<?php echo htmlspecialchars($post['thumbnailPath'] ?? '../uploads/default-thumbnail.jpg'); ?>" alt="Post Thumbnail" width="500px" height="450px">
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p style="text-align: center; margin-top: 120px; color:red; font-size: 30px;">No posts available.</p>
-                <?php endif; ?>
-            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p style="text-align: center; margin-top: 120px; color:red; font-size: 30px;">No posts available.</p>
+                    <?php endif; ?>
+                </div>
 
 
         </div>

@@ -12,15 +12,12 @@ function getUserRating($userRating) {
 // Function to format the date from Unix timestamp (in seconds)
 function formatDate($date) {
     if ($date instanceof MongoDB\BSON\UTCDateTime) {
-        // Convert MongoDB UTCDateTime to Unix timestamp and format it
         $timestamp = $date->toDateTime()->getTimestamp();
-        return date('j F Y', $timestamp); // Format: Day Month Year
+        return date('j F Y', $timestamp);
     } elseif (is_numeric($date)) {
-        // If it's already a Unix timestamp
         return date('j F Y', $date);
     } else {
-        // Handle if the date is in string format and valid
-        return date('j F Y', strtotime($date)); // Convert string to timestamp
+        return date('j F Y', strtotime($date));
     }
 }
 
@@ -38,36 +35,40 @@ if ($loggedInUserId && $userId && (string)$loggedInUserId === $userId) {
 
 if ($userId) {
     try {
-        // Fetch user information from the correct collection
         $userCollection = $db->users;
         $author = $userCollection->findOne(['_id' => new ObjectId($userId)]);
 
-        // If not found, check the 'google-users' collection
         if (!$author) {
+            // Check the 'google-users' collection
             $userCollection = $db->selectCollection('google-users');
             $author = $userCollection->findOne(['_id' => new ObjectId($userId)]);
         }
 
         if ($author) {
-            // Get user profile picture, username, rating, and created_at/createdAt
-            $authorPicture = '../uploads/' . ($author['picture'] ?? 'default.jpg'); // Default profile picture
+            // Handle the author's profile picture
+            if (isset($author['picture']) && filter_var($author['picture'], FILTER_VALIDATE_URL)) {
+                // If the picture is a URL, use it directly
+                $authorPicture = $author['picture'];
+            } else {
+                // Fallback to the default uploads directory or a default picture
+                $authorPicture = '../uploads/' . ($author['picture'] ?? 'default.jpg');
+            }
+
             $username = $author['username'] ?? 'Unknown Author';
             $userRating = getUserRating($author['user_rating'] ?? null);
 
-            // Check for 'created_at' or 'createdAt' field and format it
-            $createdAt = isset($author['created_at']) ? formatDate($author['created_at']) : (isset($author['createdAt']) ? formatDate($author['createdAt']) : 'Unknown date');
+            $createdAt = isset($author['created_at']) ? formatDate($author['created_at']) :
+                         (isset($author['createdAt']) ? formatDate($author['createdAt']) : 'Unknown date');
 
-            // Check for role in the 'user-profile' collection if it's missing in the author data
             $profileCollection = $db->selectCollection('user-profile');
             $userProfile = $profileCollection->findOne(['user_id' => new ObjectId($userId)]);
 
             if ($userProfile) {
-                $userRole = $userProfile['role'] ?? 'No Role'; // Fetch role from user-profile collection
+                $userRole = $userProfile['role'] ?? 'No Role';
                 $about = is_array($userProfile['about']) ? implode(', ', $userProfile['about']) : (string)($userProfile['about'] ?? 'No about info available');
                 $workCredentials = $userProfile['workCredentials'] ?? [];
                 $educationCredentials = $userProfile['educationCredentials'] ?? [];
             } else {
-                // Default values if no user profile data is found
                 $userRole = 'No Role';
                 $about = 'No about info available';
                 $workCredentials = [];
@@ -86,18 +87,20 @@ if ($userId) {
     exit();
 }
 
-// Fetch user blog posts from 'blog' collection
 $posts = [];
 try {
-    $postsCollection = $db->selectCollection('blog'); // Adjust to your collection name
-    $postsCursor = $postsCollection->find(['user_id' => new ObjectId($userId)]); // Query by user_id
+    $postsCollection = $db->selectCollection('blog');
+    $postsCursor = $postsCollection->find(
+        ['user_id' => new ObjectId($userId)], 
+        ['sort' => ['createdAt' => -1]] // Sort by 'createdAt' in descending order
+    );
+    
 
-    // Convert cursor to array and process each post
     foreach ($postsCursor as $post) {
-        // Check for 'createdAt' field and format the post's created date
         $formattedPostDate = isset($post['createdAt']) ? formatDate($post['createdAt']) : 'Unknown date';
 
         $posts[] = [
+            '_id' => (string)$post['_id'], // Include the post ID
             'createdAt' => $formattedPostDate,
             'category' => $post['category'] ?? 'Uncategorized',
             'title' => $post['title'] ?? 'Untitled',
@@ -109,16 +112,14 @@ try {
     echo "Error fetching posts: " . $e->getMessage();
     $posts = [];
 }
-
 ?>
 
 <body>
     <a href="javascript:history.back()" class="back-button">←</a>
-    <!-- Display User Profile -->
     <div class="visit-profile" style="margin-top: 68px;"> 
         <div class="visit-profile-container">
-        <div class="visit-profile-user-header">
-                <img src="<?php echo htmlspecialchars($authorPicture); ?>" class="visit-profile-profile-pic" width="400px" height="300px"></img>
+            <div class="visit-profile-user-header">
+                <img src="<?php echo htmlspecialchars($authorPicture); ?>" class="visit-profile-profile-pic" width="400px" height="300px">
                 <div class="visit-profile-user-info">
                     <h1><?php echo htmlspecialchars($username); ?></h1>
                     <p><?php echo htmlspecialchars($userRole); ?></p>
@@ -128,14 +129,13 @@ try {
                         <?php endfor; ?>
                     </div>
                     <a class="visit-profile-rating">(<?php echo number_format($userRating, 1); ?>)</a>
-             
                 </div>
                 <div class="visit-profile-credentials">
                     <h3>Credentials & Highlights</h3>
                     <ul>
                     <?php if (!empty($workCredentials)): ?>
                         <?php foreach ($workCredentials as $work): ?>
-                            <li>💼<span> <?php echo htmlspecialchars("{$work['position']} at {$work['organization']} ({$work['startYear']}-{$work['endYear']})"); ?></span></li>
+                            <li>💼 <span><?php echo htmlspecialchars("{$work['position']} at {$work['organization']} ({$work['startYear']}-{$work['endYear']})"); ?></span></li>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p>💼 No work credentials</p>
@@ -143,7 +143,7 @@ try {
                     
                     <?php if (!empty($educationCredentials)): ?>
                         <?php foreach ($educationCredentials as $education): ?>
-                            <li>🎓<span><?php echo htmlspecialchars("{$education['school']}, {$education['yearLevel']} ({$education['startYear']}-{$education['endYear']})"); ?></span></li>
+                            <li>🎓 <span><?php echo htmlspecialchars("{$education['school']}, {$education['yearLevel']} ({$education['startYear']}-{$education['endYear']})"); ?></span></li>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p>🎓 No education credentials</p>
@@ -152,11 +152,10 @@ try {
                     </ul>
                 </div>
             </div>
-            <div class="about-profile">
+            <div class="about-profile" style="margin-bottom: 20px;">
                 <h3>Profile Description:</h3>
                 <p class="visit-profile-bio"><?php echo htmlspecialchars($about); ?></p>
-                </div>
-
+            </div>
             <div class="visit-profile-posts">
                 <?php if (!empty($posts)): ?>
                     <?php foreach ($posts as $post): ?>
@@ -168,9 +167,8 @@ try {
                                 </div>
                                 <h2><?php echo htmlspecialchars($post['title']); ?></h2>
                                 <p><?php echo htmlspecialchars($post['shortDescription']); ?></p>
-                                <button class="visit-profile-read-more">Continue reading...</button>
+                                <button class="visit-profile-read-more" onclick="location.href='blog-post.php?_id=<?php echo htmlspecialchars($post['_id']); ?>';">Continue reading...</button>
                             </div>
-                            <!-- Post Thumbnail -->
                             <div class="visit-profile-post-thumbnail">
                                 <img src="<?php echo htmlspecialchars($post['thumbnailPath']); ?>" alt="Post Thumbnail" width="500px" height="450px">
                             </div>
@@ -182,6 +180,5 @@ try {
             </div>
         </div>
     </div>
-
 </body>
 </html>

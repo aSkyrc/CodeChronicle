@@ -5,6 +5,12 @@ include_once '../user/navigationBar.php';
 // Fetch the search query from the URL parameter
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
+// Redirect to homepage if the search query is empty
+if (empty($searchQuery)) {
+    header('Location: homepage.php');
+    exit(); // Make sure the script stops after redirecting
+}
+
 // Initialize empty results array
 $blogResults = [];
 
@@ -26,7 +32,7 @@ if ($searchQuery) {
         <div class="search-results-container">
             <h1 style="text-align: center;">Search Results</h1>
 
-            <?php if (empty($blogResults)): ?>
+            <?php if (empty($blogResux1lts)): ?>
                 <p style="text-align: center; margin-top: 200px">No blogs found matching your search query.</p>
             <?php else: ?>
                 <div class="visit-search-posts">

@@ -53,7 +53,8 @@ if ($blogId) {
 
             // If the author is found, get the profile picture and user rating
             if ($author) {
-                $authorPicture = '../uploads/' . ($author['picture'] ?? 'default.jpg'); // Constructing the image path
+                $authorPicture = $author['picture'] ?? 'default.jpg'; // If no picture, use default
+                $authorPicture = (filter_var($authorPicture, FILTER_VALIDATE_URL)) ? $authorPicture : '../uploads/' . $authorPicture;
                 $userRating = getuserRating($author['user_rating'] ?? null); // Retrieve and set the user rating
             }
 
