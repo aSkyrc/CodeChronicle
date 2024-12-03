@@ -21,7 +21,7 @@ document.getElementById('add-video-link').addEventListener('click', function () 
 const maxCharacters = {
     horizontalDescription: 360,
     blogDescription: 532,
-    shortDescription: 260,
+    shortDescription: 200,
     fullBlogDescription: 532
 };
 

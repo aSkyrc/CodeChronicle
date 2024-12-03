@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     header('Location: ../admin/homepage.php');
                     exit();
                 } else {
-                    $passwordErr = "Incorrect admin information.";
+                    $passwordErr = "Incorrect password.";
                 }
             } else {
                 // Check if the user is a regular user in the default database

@@ -190,8 +190,8 @@ if (!empty($images['name'][0])) { // Check if at least one image is uploaded
 
                     <div class="form-group-short">
                         <label for="short-description">Short Description</label>
-                        <textarea id="short-description" name="shortDescription" maxlength="260" placeholder="Short Description" required></textarea>
-                        <small class="char-count" id="short-description-char-count">0/260 characters</small>
+                        <textarea id="short-description" name="shortDescription" maxlength="200" placeholder="Short Description" required></textarea>
+                        <small class="char-count" id="short-description-char-count">0/200 characters</small>
                     </div>
 
                     <div id="full-blog-content-description-section" class="form-group-full">

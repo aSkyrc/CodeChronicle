@@ -339,6 +339,20 @@
   background-color: #5a54d6;
 }
 
+.cancel-interest-modal {
+  margin-left: 5px;
+  padding: 10px 22px;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  background-color: #dcdcdc;
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  font-family: 'Lalezar';
+  display: inline-block;
+}
+
 /* Styling for the modal's close button */
 .close-button {
   color: #aaa;

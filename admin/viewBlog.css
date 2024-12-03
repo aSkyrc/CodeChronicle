@@ -1,0 +1,272 @@
+.blog-content {
+    margin: 0;
+    height: 100vh; /* Keeps the height to fit the viewport */
+    background-color: transparent;
+    overflow: auto; /* Enables scrolling */
+}
+
+
+.blogpost-sidebar {
+    width: 220px;
+    height: calc(65vh - 20px); /* Adjust height to fit the viewport */
+    border: 1px solid rgb(151, 151, 151);
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: fixed; /* Make the sidebar fixed */
+    left: 250px; /* Adjust based on your layout */
+    top: 80px; /* Add spacing from the top */
+    font-family: 'Lalezar';
+}
+
+
+.blogpost-profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px; 
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.author-name {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.role-description {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 10px;
+}
+
+.user-rating {
+    font-size: 14px;
+}
+
+.rating-value {
+    font-weight: bold;
+}
+
+
+hr {
+    width: 80%;
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid gray;
+    margin-bottom: 40px;
+}
+
+.blogpost-sidebar a {
+    color: black;
+    text-decoration: none;
+    margin: 10px 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+.blogpost-sidebar a:hover {
+    text-decoration: underline;
+}
+
+.rate-blog {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 30px;
+    color: gray;
+    cursor: pointer;
+}
+
+.star-rating .star.active {
+    color: gold;
+}
+
+.go-back-btn {
+    background-color: #6C63FF;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 40px;
+    width: 160px;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-top: 50px;
+    font-size: 20px;
+    font-family: 'Lalezar';
+}
+
+.go-back-btn:hover {
+    background-color: #5752d8;
+}
+
+.blogpost-main-content {
+    flex: 1;
+    margin-right: 240px;
+    margin-left: 530px;
+}
+
+.blogpost-content-container {
+    display: flex; /* Align image and text horizontally */
+    flex-direction: column; /* Ensures horizontal layout */
+    margin: 0;
+    padding: 10px;
+}
+
+.text-content {
+    flex: 1; /* Ensures text takes up available space */
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.blogpost-title {
+    margin-top: 30px;
+    font-size: 35px !important;
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1; /* Adds spacing between lines */
+}
+
+.blogpost-title-thumbnail {
+    display: flex; /* Aligns the image and text side by side */
+    align-items: flex-start; /* Aligns the content at the top */
+    gap: 20px; /* Space between the text and image */
+    flex-wrap: column; /* Allows the image to move below if the text grows */
+}
+
+
+.blogpost-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.blogpost-category {
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+}
+
+.blogpost-meta {
+    font-size: 20px;
+    color: #666;
+}
+
+.text-content {
+    flex: 1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.blogpost-shortdescription {
+    font-size: 20px; /* Adjust the font size here */
+    font-family: 'Lalezar';
+    color: #282829;
+    line-height: 1.5; /* Adds spacing between lines */
+    margin-bottom: 20px; /* Adds spacing below the short description */
+    text-align: justify; /* Makes the text justified */
+    width: calc(100% - 0px); /* Adjusts the width dynamically to accommodate the image width and gap */
+    min-width: 300px; /* Ensures the text doesn’t shrink too much */
+}
+
+.img-thumbnail {
+    margin-right: 100px; /* Adds spacing between the image and the text */
+}
+
+.img-thumbnail img {
+    width: 400px; /* Fixes the width */
+    height: 300px; /* Fixes the height */
+    object-fit: cover; /* Ensures the image stays properly cropped */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.blogpost-blogcontentdescription,
+.blogpost-horizontaldescription,
+.blogpost-imageuploadsection,
+.blogpost-fullblogcontentdescription,
+.youtube-video-container {
+    margin-top: 30px;
+
+}
+
+.blogcontentdescription,
+.horizontaldescription {
+    color: #282829;
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: 'Lalezar';
+    font-size: 20px;
+    text-align: justify; /* Makes the text justified */
+}
+
+.horizontaldescription {
+    margin-left: 190px;
+    margin-right: 190px;
+}
+
+.blogpost-imageuploadsection {
+    display: flex;
+    justify-content: center; /* Horizontally center the video */
+    align-items: center; /* Vertically center if needed */
+    margin-top: 70px;
+}
+
+.blogpost-imageuploadsection img {
+    max-width: 80%;
+    max-height: 10%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.youtube-video-container {
+    display: flex;
+    justify-content: center; /* Horizontally center the video */
+    align-items: center; /* Vertically center if needed */
+    margin-top: 70px;
+}
+
+.youtube-video-container iframe {
+    width: 80%; /* Adjust the width as needed */
+    max-width: 400px;
+    height: 315px;
+    border-radius: 8px;
+}
+
+.submit-rating-blog {
+    background-color: none;
+    border: none;
+    font-size: 16px;
+    font-family: 'Lalezar';
+    cursor: pointer;
+    color: #000;
+}
+
+.submit-rating-blog:hover {
+    text-decoration: underline;
+}

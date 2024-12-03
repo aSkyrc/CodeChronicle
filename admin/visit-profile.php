@@ -1,6 +1,6 @@
 <?php
 // Include the navigation bar file which contains the MongoDB connection and session handling
-include_once '../user/navigationBar.php';
+include_once '../admin/adminId.php';
 
 use MongoDB\BSON\ObjectId;
 
@@ -24,17 +24,8 @@ function formatDate($date) {
     }
 }
 
-// Get the logged-in user's ID (from session)
-$loggedInUserId = $_SESSION['user_id'] ?? null;
-
 // Get the user_id from the URL query string
 $userId = $_GET['user_id'] ?? null;
-
-// Redirect to 'profile.php' if the logged-in user is viewing their own profile
-if ($loggedInUserId && $userId && (string)$loggedInUserId === $userId) {
-    header("Location: profile.php");
-    exit();
-}
 
 if ($userId) {
     try {
@@ -115,7 +106,7 @@ try {
 <body>
     <a href="javascript:history.back()" class="back-button">←</a>
     <!-- Display User Profile -->
-    <div class="visit-profile" style="margin-top: 68px;"> 
+    <div class="visit-profile"> 
         <div class="visit-profile-container">
         <div class="visit-profile-user-header">
                 <img src="<?php echo htmlspecialchars($authorPicture); ?>" class="visit-profile-profile-pic" width="400px" height="300px"></img>
@@ -157,7 +148,7 @@ try {
                 <p class="visit-profile-bio"><?php echo htmlspecialchars($about); ?></p>
                 </div>
 
-            <div class="visit-profile-posts">
+            <div class="visit-profile-posts" style="margin-top: 30px;">
                 <?php if (!empty($posts)): ?>
                     <?php foreach ($posts as $post): ?>
                         <div class="visit-profile-post">

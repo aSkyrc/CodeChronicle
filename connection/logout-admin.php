@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/connection.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/session-config.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Code Chronicle/connection/admin-session-config.php';
+// Start the session
 session_start();
 
 // Destroy the session to log the user out

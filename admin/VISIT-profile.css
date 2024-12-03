@@ -1,0 +1,219 @@
+.visit-profile-container {
+    max-width: 1000px;
+    margin: 10px  auto;
+    padding: 20px;
+    background: transparent;
+    border: none;
+}
+
+.visit-profile-user-header {
+    display: flex;
+    align-items: flex-start;
+}
+
+.about-profile {
+    border-bottom: 1px solid #bfbfbf;
+    padding: 15px 20px 30px 50px;
+}
+
+.about-profile p {
+    margin-left: 30px;
+}
+
+.visit-profile-profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #ccc;
+    flex-shrink: 2;
+    border: 20px solid white;
+    object-fit: cover;
+}
+
+.visit-profile-user-info {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding-right: 10px;
+    display: inline-block;
+}
+
+.visit-profile-ratings {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.visit-profile-stars {
+    color: gold;
+    margin-right: 5px;
+}
+
+.visit-profile-credentials {
+    margin-left: 240px;
+}
+
+.visit-profile-credentials li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.visit-profile-credentials button {
+    margin-bottom: 10px;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.visit-profile-posts {
+    display: flex;
+    flex-direction: column; /* Stack posts vertically */
+    gap: 20px; /* Space between posts */
+}
+
+.visit-profile-post {
+    display: flex;
+    flex-direction: row; /* Arrange content and thumbnail horizontally */
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px; /* Space between content and image */
+}
+
+.visit-profile-post-content {
+    flex: 2; /* Content takes 2/3 of the space */
+    display: flex;
+    flex-direction: column; /* Content stays stacked vertically */
+    justify-content: flex-start; /* Align content to the top */
+    padding: 20px;
+    position: relative; /* Allow absolute positioning for the icons */
+}
+
+.visit-profile-post-content .visit-profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.visit-profile-post-content h2 {
+    margin: 10px 0;
+    font-size: 1.8rem;
+}
+
+.visit-profile-post-content p {
+    margin: 0 0 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.post-actions {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.edit-icon, .delete-icon {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #007BFF;
+    transition: color 0.3s ease;
+}
+
+.edit-icon:hover, .delete-icon:hover {
+    color: #FF5733; /* Change color on hover */
+}
+
+
+.visit-profile-post-thumbnail {
+    flex: 1; /* Thumbnail takes 1/3 of the space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensure the image container takes up full width of its allocated space */
+    height: 265px; /* Fixed height for the thumbnail */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.visit-profile-post-thumbnail img {
+    width: 100%; /* Make the image take the full width of its container */
+    height: 100%; /* Make the image fill the height of the container */
+    object-fit: cover; /* Maintain aspect ratio while filling the container */
+    border-radius: 5px;
+}
+
+/* Button for continue reading */
+.visit-profile-read-more {
+    padding: 8px 16px;
+    background-color: #c8c8c8;
+    color: rgb(0, 0, 0);
+    border: 2px solid black;
+    border-radius: 30px;
+    width: 50%;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Lalezar';
+    margin-left: 100px;
+    transition: background-color 0.3s ease;
+}
+
+.visit-profile-read-more:hover {
+    background-color: #cecece;
+    color: #282829;
+}
+
+
+.visit-profile-stars {
+    display: inline-flex;
+    font-size: 25px;
+}
+
+.visit-profile-star {
+    transition: color 0.3s;
+}
+
+.star-empty {
+    color: lightgray; /* Default empty star color */
+}
+
+.star-filled {
+    color: gold; /* Color for filled (rated) stars */
+}
+
+/* Style for the back button */
+.back-button {
+    position: absolute;
+    top: 50px; /* Distance from the top */
+    left: 40px; /* Distance from the left */
+    font-size: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black; /* Blue color for the link */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.back-button:hover {
+    color: #6c63ff;
+}
+
+
+
+.profile-button-blog {
+    margin: 0 400px 0 400px;
+    background-color: #6c63ff;
+    color: #fff;
+    width: 150px;
+    padding: 5px 10px;
+    border: 1px solid black;
+    font-family: 'Lalezar';
+    font-size: 15px;
+    border-radius: 50px;
+    cursor: pointer;
+}

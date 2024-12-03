@@ -54,11 +54,11 @@ if ($user_id) {
     <link rel="stylesheet" href="../screen/css/navigationBar.css">
     <link rel="stylesheet" href="../screen/css/BLOG.css">
     <link rel="stylesheet" href="../screen/css/SETTINGS.css">
-    <link rel="stylesheet" href="../screen/css/homepage.css">
+    <link rel="stylesheet" href="../screen/css/HOMEPAGE.css">
     <link rel="stylesheet" href="../screen/css/VIEWBLOG.css">
     <link rel="stylesheet" href="../screen/css/Community.css">
     <link rel="stylesheet" href="../screen/css/COmmunity-visit.css">
-    <link rel="stylesheet" href="../screen/css/Visit-profile.css">
+    <link rel="stylesheet" href="../screen/css/visit-profile.css">
     <link rel="stylesheet" href="../screen/css/Search.css">
     <title>Code Chronicle</title>
 </head>

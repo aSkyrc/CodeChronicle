@@ -1,0 +1,162 @@
+
+/* General Body Styles */
+body {
+    font-family: 'Lalezar', sans-serif;
+    display: flex;
+    margin: 0;
+    background-color: #f4f7fc;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed; /* Fix the sidebar to the left of the screen */
+    top: 0;
+    left: 0;
+    width: 200px; /* Fixed width */
+    height: 92vh; /* Full height of the viewport */
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 10px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Space items between top and bottom */
+    z-index: 1000; /* Ensure the sidebar stays above other content */
+}
+
+/* Sidebar Profile Image */
+.rounded-corners {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 50px;
+    border: #6c63ff 20px solid;
+}
+
+/* Sidebar Header */
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Sidebar Links */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the list items vertically */
+    align-items: center;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    padding: 8px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li :hover {
+    display: block;
+    background-color: #6c63ff;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Sidebar Logout Button */
+.sidebar .button {
+    display: block;
+    background-color: #6c63ff;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-top: auto; /* Push the button to the bottom */
+    transition: background-color 0.3s;
+}
+
+.sidebar .button:hover {
+    background-color: #524fe1;
+}
+
+/* Main Content Layout */
+.dashboard {
+    flex-grow: 1;
+    display: grid;
+    grid-template-areas: 
+        "info-boxes line-chart"
+        "info-boxes bar-chart"; 
+    grid-gap: 20px;
+    padding: 20px;
+}
+.community-main-container {
+    margin-left: 310px;
+}
+/* Container Layout */
+.community-container {
+    display: flex;
+}
+
+/* Container for rows */
+.community-container1 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Row layout */
+.community-row {
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    gap: 10px; /* Space between content boxes */
+}
+
+.community-image1 {
+    border: 1px solid #E3E4E5;
+    width: 100%; /* Make the image responsive and fit the container */
+    height: 120px; /* Maintain the aspect ratio */
+    object-fit: cover; /* Ensures the image fits within the container without distortion */
+}
+.community-content {
+    flex: 1; /* Ensures equal width */
+    max-width: 520px; /* Prevents boxes from getting too wide */
+    padding: 5px 8px 20px 5px;
+    height: 140px;
+    box-shadow: 0 6px 2px -2px gray;
+    background-color: white;
+    border: 2px solid #E3E4E5;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in, box-shadow 0.3s ease-in; /* Add smooth transition for transform and box-shadow */
+    border-radius: 5px;
+}
+
+.community-content:hover {
+    transform: translateY(-5px); /* Move the content upwards slightly */
+    box-shadow: 0 8px 6px -2px rgba(0, 0, 0, 0.1); /* Add a more prominent shadow on hover */
+}
+
+.community-content h3 {
+    margin: 0;
+    color: #000;
+}
+
+.community-content a {
+    text-decoration: none;
+    color: #000;
+}
+
+.community-com {
+    font-size: 20px;
+}
+

@@ -82,10 +82,10 @@ $categoryCountsJson = json_encode($categoryCounts ?? []); // Added this for the 
         <h2>Hi Admin</h2>
         <img src="../uploads/hanni-newjeans-get-up-4k-wallpaper-uhdpaper.com-948@1@k.jpg" alt="Profile Pic" class="rounded-corners" />
         <ul>
-            <li><a class="buttons" href="adminstatistic.html">Statistics</a></li>
-            <li><a class="buttons" href="admincommunity.html">Community</a></li>
+            <li><a class="buttons" href="homepage.php">Statistics</a></li>
+            <li><a class="buttons" href="community.php">Community</a></li>
         </ul>
-        <a class="button" href="../connection/logout.php">Logout</a>
+        <a class="button" href="../connection/logout-admin.php">Logout</a>
     </div>
     <div class="dashboard">
         <div class="line-chart">
