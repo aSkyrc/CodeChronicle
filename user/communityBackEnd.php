@@ -131,12 +131,9 @@ $blogs = iterator_to_array($blogsCursor);
 
         <!-- Community Sidebar -->
         <div class="community-visit-sidebar">
+            <img class="blogging-image" src="../logos/bloggings.jpg" alt="Blogging">
             <div class="community-visit-top-blog">
-                <h3>Top Blog</h3>
                 <div class="community-visit-blog-highlight">
-                    <h4>Figma</h4>
-                    <img src="" alt="Figma Tool">
-                    <p>A collaborative interface design tool that connects everyone...</p>
                     <button onclick="location.href = 'communityPostBlog.php?community=Backend%20Development';">Post</button>
                 </div>
             </div>
@@ -144,6 +141,7 @@ $blogs = iterator_to_array($blogsCursor);
     </div>
 </div>
 <script>
+    
 function toggleJoinStatus(communityName) {
     const joinButton = document.getElementById('joinButton');
     

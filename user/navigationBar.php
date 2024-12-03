@@ -57,7 +57,7 @@ if ($user_id) {
     <link rel="stylesheet" href="../screen/css/HOMEPAGE.css">
     <link rel="stylesheet" href="../screen/css/VIEWBLOG.css">
     <link rel="stylesheet" href="../screen/css/Community.css">
-    <link rel="stylesheet" href="../screen/css/COmmunity-visit.css">
+    <link rel="stylesheet" href="../screen/css/community-visit.css">
     <link rel="stylesheet" href="../screen/css/visit-profile.css">
     <link rel="stylesheet" href="../screen/css/Search.css">
     <title>Code Chronicle</title>

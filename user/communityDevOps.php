@@ -132,11 +132,8 @@ $blogs = iterator_to_array($blogsCursor);
         <!-- Community Sidebar -->
         <div class="community-visit-sidebar">
             <div class="community-visit-top-blog">
-                <h3>Top Blog</h3>
+            <img class="blogging-image" src="../logos/bloggings.jpg" alt="Blogging">
                 <div class="community-visit-blog-highlight">
-                    <h4>Figma</h4>
-                    <img src="" alt="Figma Tool">
-                    <p>A collaborative interface design tool that connects everyone...</p>
                     <button onclick="location.href = 'communityPostBlog.php?community=DevOps%20and%20Cloud%20Computing';">Post</button>
                 </div>
             </div>

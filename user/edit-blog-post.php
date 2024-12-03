@@ -311,7 +311,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="Mobile Development" <?php echo ($category == "Mobile Development") ? 'selected' : ''; ?>>Mobile Development</option>
                                 <option value="DevOps and Cloud Computing" <?php echo ($category == "DevOps and Cloud Computing") ? 'selected' : ''; ?>>DevOps and Cloud Computing</option>
                                 <option value="Cybersecurity" <?php echo ($category == "Cybersecurity") ? 'selected' : ''; ?>>Cybersecurity</option>
-                                <option value="Artificial Intelligence and Data Science" <?php echo ($category == "Artificial Intelligence and Data Science") ? 'selected' : ''; ?>>Artificial Intelligence and Data Science</option>
+                                <option value="Programming Language" <?php echo ($category == "Programming Language") ? 'selected' : ''; ?>>Programming Language</option>
+                                <option value="Algorithms and Data Structures" <?php echo ($category == "Algorithms and Data Structures") ? 'selected' : ''; ?>>Algorithms and Data Structures</option>
+                                <option value="Game Development" <?php echo ($category == "Game Development") ? 'selected' : ''; ?>>Game Development</option>
+                                <option value="Career and Networking" <?php echo ($category == "Career and Networking") ? 'selected' : ''; ?>>Career and Networking</option>
                             </select>
                         </div>
                         <div class="form-group">

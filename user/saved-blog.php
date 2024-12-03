@@ -75,6 +75,7 @@ if (!empty($savedBlogIds)) {
 
 <body>
     <div class="contents" style="margin-top: 68px"> 
+    <h5 class="savedblog">Saved Blogs</h5>
         <div class="home-page-container">
             <aside class="homepage-sidebar">
                 <div class="homepage-user-info-sidebar">
@@ -105,8 +106,7 @@ if (!empty($savedBlogIds)) {
                 </div>
             </aside>
 
-            <div class="homepage-center-content" id="post-container">
-                <h5 class="savedblog" style="text-align: center;">Saved Blogs</h5>
+            <div class="homepage-center-content" id="post-container" style="margin-left: 20px;">
                 <?php foreach ($blogs as $blog): ?>
                     <?php
                         // Fetch user details as in the original code
@@ -116,8 +116,7 @@ if (!empty($savedBlogIds)) {
                         $authorPicture = $authorData['picture'] ?? '../logos/userDefault.png';
                         $authorPicturePath = '../uploads/' . basename($authorPicture);
                     ?>
-                    <div class="post-card" style="margin: 0 auto; margin-bottom: 20px; ">
-                       
+                    <div class="post-card" style="margin: 0 auto; margin-bottom: 20px; margin-top: 40px">
                         <div class="homepage-content-container">
                             <div class="homepage-user-info">
                                 <img src="<?php echo htmlspecialchars($authorPicturePath); ?>" alt="User Image">
@@ -144,10 +143,7 @@ if (!empty($savedBlogIds)) {
                     </div>
                 <?php endforeach; ?>
                 <div class="homepage-sidebar-right">
-                    <h3>Popular Blog Content</h3>
-                    <ul>
-                        <!-- Popular blog list can be added here -->
-                    </ul>
+                 <img src="../logos/blogcontent.jpg">
                 </div>
             </div>
         </div>

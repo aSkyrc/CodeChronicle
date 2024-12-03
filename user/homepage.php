@@ -159,10 +159,7 @@ $blogs = $blogCollection->find($filter);
                     </div>
                 <?php endforeach; ?>
                 <div class="homepage-sidebar-right">
-                    <h3>Popular Blog Content</h3>
-                    <ul>
-                        <!-- Popular blog list can be added here -->
-                    </ul>
+                    <img src="../logos/blogcontent.jpg">
                 </div>
             </div>
         </div>
@@ -183,7 +180,7 @@ $blogs = $blogCollection->find($filter);
                 <li><input type="checkbox" name="interest[]" value="DevOps and Cloud Computing" <?php echo in_array('DevOps and Cloud Computing', $interestsArray) ? 'checked' : ''; ?>> DevOps and Cloud Computing</li>
                 <li><input type="checkbox" name="interest[]" value="Game Development" <?php echo in_array('Game Development', $interestsArray) ? 'checked' : ''; ?>> Game Development</li>
                 <li><input type="checkbox" name="interest[]" value="Cybersecurity" <?php echo in_array('Cybersecurity', $interestsArray) ? 'checked' : ''; ?>> Cybersecurity</li>
-                <li><input type="checkbox" name="interest[]" value="Programming Languages" <?php echo in_array('Programming Languages', $interestsArray) ? 'checked' : ''; ?>> Programming Languages</li>
+                <li><input type="checkbox" name="interest[]" value="Programming Language" <?php echo in_array('Programming Language', $interestsArray) ? 'checked' : ''; ?>> Programming Language</li>
                 <li><input type="checkbox" name="interest[]" value="Algorithms and Data Structures" <?php echo in_array('Algorithms and Data Structures', $interestsArray) ? 'checked' : ''; ?>> Algorithms and Data Structures</li>
                 <li><input type="checkbox" name="interest[]" value="Career and Networking" <?php echo in_array('Career and Networking', $interestsArray) ? 'checked' : ''; ?>> Career and Networking</li>
             </ul>

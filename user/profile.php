@@ -140,7 +140,7 @@ $createdAt = isset($userData['created_at']) ? formatDate($userData['created_at']
 
                                 <h2><?php echo htmlspecialchars($post['title'] ?? 'Untitled'); ?></h2>
                                 <p><?php echo htmlspecialchars($post['shortDescription'] ?? 'No description available.'); ?></p>
-                                <button class="visit-profile-read-more">Continue reading...</button>
+                                <button class="visit-profile-read-more" onclick=" location.href='blog-post.php?_id=<?php echo htmlspecialchars((string)$post['_id']); ?>';">Continue reading...</button>
                             </div>
 
                             <!-- Post Thumbnail -->
