@@ -1,4 +1,17 @@
+/* Remove scroll from all sections */
+.home-page-container, .homepage-center-content, .homepage-sidebar, .homepage-user-info-sidebar,
+.homepage-sidebar-right, .post-card, .homepage-modal-content, .homepage-interests ul, .homepage-modal-content ul,
+.homepage-text-content, .tutorial, .homepage-user-info {
+    overflow: hidden; /* Remove scrolling from all individual sections */
+}
 
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling if you don't want it */
+    overflow-y: auto; /* Enable vertical scrolling for the entire body */
+}
 
 * {
   margin: 0;
@@ -35,7 +48,7 @@ body {
 .logo img {
   height: 50px;
   border-radius: 50px;
-  margin: 5px 15px 5px 0px
+  margin: 5px 5px 5px 0px
 }
 
 .logo span {
@@ -86,6 +99,7 @@ body {
 .icons img {
   width: 28px;
   height: 28px;
+
 }
 
 .profile {

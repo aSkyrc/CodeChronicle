@@ -1,397 +1,362 @@
+/* General adjustments to remove scroll from all except the necessary sections */
+.home-page-container {
+  display: flex;
+  margin-top: 50px;
+  width: 100%;
+}
 
 
+.homepage-sidebar {
+  padding: 10px;
+  border-radius: 10px;
+  width: 200px;
+  position: fixed;
+  margin-top: 10px;
+  margin-left: 230px;
+}
 
+.homepage-user-info-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #dbdbdb;
+  padding: 5px;
+  padding-left: 20px;
+  position: relative;
+  padding-bottom: 80px;
+  border-radius: 10px;
+  border: 1px solid #E3E4E5;
+}
 
-  /* Adjusting content without a left sidebar */
-  .home-page-container {
-    display: flex;
-    margin-top: 50px;
-    width: 100%;
-  }
+.homepage-user-details {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+}
 
-  .homepage-center-content {
-    flex-grow: 1;
-    padding: 10px;
-    overflow-y: auto;
-    margin: 0 auto; /* Center the content */
-    max-width: 100%; /* Adjust width for readability */
-    max-height: calc(100vh - 20px); /* Ensure the content container has a limit on height */
-  }
+.username,
+.role {
+  margin: 0;
+  font-family: 'Lalezar';
+  font-size: 15px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-55%);
+}
 
-  .homepage-sidebar {
-          padding: 10px;
-          border-radius: 10px;
-          width: 200px;
-          position: fixed;
-          margin-top: 10px;
-          margin-left: 230px;       
-      }
+.homepage-line {
+  position: absolute;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 60px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-      .homepage-user-info-sidebar {
-        display: flex;
-        flex-direction: column; /* Change to column to center the content vertically */
-        align-items: center; /* Center horizontally */
-        justify-content: center; /* Center vertically */
-        background-color: #dbdbdb;
-        padding: 5px;
-        padding-left: 20px;
-        position: relative;
-        padding-bottom: 80px;
-        border-radius: 10px;
-        border: 1px solid #E3E4E5;
-        
-    }
-    
-    .homepage-user-details {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-top: 0; /* Remove extra margin if needed */
-    }
-    
-    .username {
-        margin: 0;
-        margin-top: 10px;
-        font-family: 'Lalezar';
-        font-size: 15px;
-        position: relative; /* Added to apply transform properly */
-        left: 50%; /* Center horizontally */
-        transform: translateX(-55%); /* Adjust positioning */
-    }
-    
-    .role {
-        font-size: 14px;
-        color: #000000;
-        font-family: 'Lalezar';
-        margin-top: 5px;
-        position: relative; /* Added to apply transform properly */
-        left: 50%; /* Center horizontally */
-        transform: translateX(-55%); /* Adjust positioning */
-    }
-    
-    .homepage-line {
-        position: absolute;
-        text-align: center;
-        align-items: center;
-        width: 100%; /* Ensure the line spans the full width */
-        margin-top: 60px; /* Adjust margin-top to position the line correctly */
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        left: 50%; /* Center horizontally */
-        transform: translateX(-50%); /* Adjust positioning */
-    }
-    
-    
-    .post-blog-btn {
-        background-color: #6c63ff;
-        color: #fff;
-        width: 150px;
-        padding: 5px 10px;
-        border: 1px solid black;
-        font-family: 'Lalezar';
-        font-size: 15px;
-        border-radius: 50px;
-        cursor: pointer;
-        position: absolute;
-        bottom: 10px;
-        left: 25px;
-    }
-    
+.post-blog-btn {
+  background-color: #6c63ff;
+  color: #fff;
+  width: 150px;
+  padding: 5px 10px;
+  border: 1px solid black;
+  font-family: 'Lalezar';
+  font-size: 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
+}
 
-      .homepage-interests ul {
-          list-style: none;
-          padding: 0;
-          text-align: center;
-      }
+.homepage-interests ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
 
-      .homepage-interests li {
-          margin: 5px 20px;
-          cursor: pointer;
-          color: #282829;
-          font-family: 'Lalezar';
-          font-size: 14px;
-      }
+.homepage-interests li {
+  margin: 5px 20px;
+  cursor: pointer;
+  color: #282829;
+  font-family: 'Lalezar';
+  font-size: 14px;
+}
 
-      .homepage-interests{
-          text-align: center;
-          margin-top: 30px;
-      }
+.homepage-interests {
+  text-align: center;
+  margin-top: 30px;
+}
 
-      .homepage-interests a{
-          color: #000000;
-          margin: 0;
-          padding: 0;
-          font-size: 16px;
-          font-family: 'Lalezar';
-      }
+.homepage-interests a {
+  color: #000000;
+  font-size: 16px;
+  font-family: 'Lalezar';
+}
 
-      .homepage-interests h6{
-          margin-top: -10px;
-      }
+.homepage-interests h6 {
+  margin-top: -10px;
+}
 
-  .homepage-sidebar-right {
-    width: 150px;
-    height: 45%;
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin-top: 40px;
-    margin-right: 240px;
-    border: 2px solid #ddd;
-    position: fixed;
-    top: 46px;
-    right: 0;
-    z-index: 5;
-  }
+.homepage-sidebar-right {
+  width: 150px;
+  height: 45%;
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-top: 40px;
+  margin-right: 240px;
+  border: 2px solid #ddd;
+  position: fixed;
+  top: 46px;
+  right: 0;
+  z-index: 5;
+}
 
-  .sidebar-right h3 {
-    font-weight: 900;
-    font-family: 'Lalezar';
-  }
+.sidebar-right h3 {
+  font-weight: 900;
+  font-family: 'Lalezar';
+}
 
-  .post-card {
-    background-color: #fafafa;
-    border: 1px solid #E3E4E5;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    align-items: center;
-    width: calc(42.5% - 40px); /* Use calc to subtract padding from 50% */
-    height: 220px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    overflow: hidden;
-    justify-content: space-between;
-  }
+/* Prevent shrinking of post cards */
+.post-card {
 
-  
-  .post-card img {
-    width: 38%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0 8px 8px 0;
-  }
+  background-color: #fafafa;
+  border: 1px solid #E3E4E5;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  width: calc(42.5% - 40px);
+  height: 220px; /* Fixed height to prevent shrinking */
+  margin: 0 auto;
+  margin-bottom: 20px;
+  overflow: hidden; /* Ensure no scroll within the card itself */
+  justify-content: space-between;
+  transform: translate(3%, 0%); /* Adjust X and Y axes */
+}
 
-  .homepage-text-content {
-    color: #282829;
-    line-height: 0.5;
-    padding-left: 30px;
-    position: relative;
-    font-weight: bold;
-  }
+.home-page-container, 
+.homepage-sidebar, 
+.homepage-sidebar-right, 
+.homepage-user-info-sidebar {
+  overflow: hidden; /* Prevent scrollbars */
+}
+.post-card img {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0 8px 8px 0;
+}
 
-  .homepage-text-content p{
-    margin-top: 10px;
-    font-size: 30px;
-    padding-left: 10px;
-    margin-bottom: 10px;
-    color: #000000;
-    font-family: 'Lalezar';
-  }
-  
-  .tutorial {
-    font-size: 8px;
-    margin-left: 50px;
-    font-family: 'Lalezar';
-    color: #282829;
-    text-align: justify; /* Makes the text justified */
-    margin-right: 10px;
-   
-  }
+.homepage-text-content {
+  color: #282829;
+  line-height: 0.5;
+  padding-left: 30px;
+  position: relative;
+  font-weight: bold;
+}
 
-  .homepage-user-info {
-    display: flex;
-    align-items: flex-start; /* Align items to the top */
-    margin-bottom: 15px;
+.homepage-text-content p {
+  margin-top: 14px;
+  font-size: 25px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  color: #000000;
+  font-family: 'Lalezar';
+}
+
+.tutorial {
+  font-size: 8px;
+  margin-left: 50px;
+  font-family: 'Lalezar';
+  color: #282829;
+  text-align: justify;
+  margin-right: 10px;
+}
+
+.homepage-user-info {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
 }
 
 .homepage-user-info img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-
-    margin-right: 5px;  /* Space between image and text */
-    margin-left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 5px;
+  margin-left: 10px;
 }
 
 .user-info {
-    display: flex;
-    flex-direction: column;  /* Align text items vertically */
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .user-name-rating {
-    display: flex;
-    align-items: center; /* Align username and rating in one row */
+  display: flex;
+  align-items: center;
 }
 
 .user-name {
-    font-size: 15px;
-    color: #282829;
-    font-family: 'Lalezar';
-    margin-right: 5px;
+  font-size: 15px;
+  color: #282829;
+  font-family: 'Lalezar';
+  margin-right: 5px;
 }
 
 .rating {
-    font-size: 15px;
-    color: #7E7E7E;
-    font-family: 'Lalezar';
+  font-size: 15px;
+  color: #7E7E7E;
+  font-family: 'Lalezar';
 }
 
 .category {
-    font-size: 12px;
-    color: #7E7E7E;
-    font-family: 'Lalezar';
+  font-size: 12px;
+  color: #7E7E7E;
+  font-family: 'Lalezar';
 }
 
+.dot {
+  margin-left: 2px;
+  color: #282829;
+}
 
-  .dot {
-    margin-left: 2px;
-    color: #282829;
+.save {
+  margin-top: -15%;
+  padding-left: 330px;
+}
 
-  }
+.save img {
+  width: 25px;
+  height: 25px;
+  border-radius: 1px;
+  cursor: pointer;
+}
 
-  .save{
-    margin-top: -15%;
-    padding-left: 330px;
-  }
-  
-  .save img{
-    width: 25px;
-    height: 25px;
-    border-radius: 1px;
-    cursor: pointer;
-  }
+.continue-button {
+  padding: 8px 16px;
+  background-color: #ececec;
+  color: rgb(196, 192, 192);
+  border: 2px solid black;
+  border-radius: 30px;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Lalezar';
+  margin-left: 110px;
+  transition: background-color 0.3s ease;
+}
 
-  .continue-button {
-    padding: 8px 16px;
-    background-color: #ececec;
-    color: rgb(196, 192, 192);
-    border: 2px solid black;
-    border-radius: 30px;
-    cursor: pointer;
-    text-align: center;
-    font-family: 'Lalezar';
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    margin-left: 110px;
-    transition: background-color 0.3s ease;
-  }
+.continue-button:hover {
+  background-color: #cecece;
+  color: #282829;
+}
 
-  .continue-button:hover {
-    background-color: #cecece;
-    color: #282829;
-  }
+.add-interest-btn {
+  background-color: transparent;
+  color: black;
+  font-family: 'Lalezar';
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
-  .add-interest-btn {
-    background-color: transparent;
-    color: black;
-    font-family: 'Lalezar';
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-
-  .homepage-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7); /* Increased opacity for better visibility */
+.homepage-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Only apply scroll if necessary */
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .homepage-modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 30%;
-    text-align: center; /* Center-align all modal content */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 30%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Heading alignment */
 .homepage-modal-content h3 {
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
-/* Aligning the list of categories */
 .homepage-modal-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .homepage-modal-content li {
-    display: flex;
-    align-items: center; /* Align items vertically */
-    justify-content: flex-start; /* Align items to the left */
-    margin-bottom: 10px; /* Add spacing between items */
-    margin-left: 90px;
-    margin-right: 80px;
-    
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  margin-left: 90px;
+  margin-right: 80px;
 }
 
-/* Styling the radio button and label */
 .homepage-modal-content li input[type="checkbox"] {
-    margin-right: 10px; /* Space between radio button and label */
-    vertical-align: middle; /* Ensure radio buttons are aligned with text */
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .homepage-modal-content li label {
-    margin: 0;
-    font-size: 16px;
-    vertical-align: middle; /* Align text with radio button */
+  margin: 0;
+  font-size: 16px;
+  vertical-align: middle;
 }
 
-/* Button Styling */
 .add-interest-modal {
-    padding: 10px 30px;
-    border: 1px solid black;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 20px;
-    background-color: #6c63ff;
-    color: white;
-    font-size: 15px;
-    font-family: 'Lalezar';
-    display: flex;
-    display: inline-block;
+  padding: 10px 30px;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  background-color: #6c63ff;
+  color: white;
+  font-size: 15px;
+  font-family: 'Lalezar';
+  display: inline-block;
 }
 
-.cancel-interest-modal {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 20px;
-    background-color: #ffffff;
-    border: 1px solid black;
-    color: black;
-    font-size: 16px;
-    font-family: 'Lalezar';
-    display: flex;
-    display: inline-block;
+.add-interest-modal:hover {
+  background-color: #5a54d6;
 }
 
-.cancel-interest-modal:hover {
-    background-color: #bbb;
+/* Styling for the modal's close button */
+.close-button {
+  color: #aaa;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 25px;
 }
 
-.homepage-add-interest-btn {
-    margin-top: 10px;
-    cursor: pointer;
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .savedblog {
   text-align: center;
   font-size: 30px;
 }
-

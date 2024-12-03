@@ -1,0 +1,170 @@
+/* General Body Styles */
+body {
+    font-family: 'Lalezar', sans-serif;
+    display: flex;
+    margin: 0;
+    height: 100%;
+    background-color: #f4f7fc;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed; /* Fix the sidebar to the left of the screen */
+    top: 0;
+    left: 0;
+    width: 200px; /* Fixed width */
+    height: 92vh; /* Full height of the viewport */
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 10px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Space items between top and bottom */
+    z-index: 1000; /* Ensure the sidebar stays above other content */
+}
+
+/* Sidebar Profile Image */
+.rounded-corners {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 50px;
+    border: #6c63ff 20px solid;
+}
+
+/* Sidebar Header */
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Sidebar Links */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the list items vertically */
+    align-items: center;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    padding: 8px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li :hover {
+    display: block;
+    background-color: #6c63ff;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Sidebar Logout Button */
+.sidebar .button {
+    display: block;
+    background-color: #6c63ff;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-top: auto; /* Push the button to the bottom */
+    transition: background-color 0.3s;
+}
+
+.sidebar .button:hover {
+    background-color: #524fe1;
+}
+
+/* Main Content Layout */
+.dashboard {
+    margin-left: 285px; /* Add margin to the left to make room for the sidebar */
+    flex-grow: 1;
+    display: grid;
+    grid-template-areas: 
+        "info-boxes line-chart"
+        "info-boxes bar-chart"; 
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+/* Line Chart Styles */
+.line-chart {
+    grid-area: line-chart;
+    background: #ededed;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Ensure the chart takes up 100% of available width */
+    max-width: 600px; /* Set a maximum width */
+    border: 1px solid #bebebe;
+    color: #282829;
+}
+
+/* Bar Chart Styles */
+.bar-chart {
+    grid-area: bar-chart;
+    background: #ededed;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Ensure the chart takes up 100% of available width */
+    max-width: 600px; /* Set a maximum width */
+    align-items: center;
+    border: 1px solid #bebebe;
+}
+
+/* Info Boxes Styles */
+.info-boxes {
+    grid-area: info-boxes;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-box {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.financial {
+    background-color: #ededed;
+    border: 1px solid #bebebe;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #282829;
+
+}
+
+.product {
+    background-color: #ffffff;
+}
+
+/* Pie Chart Styles */
+.pie-chart {
+    background: #ededed;
+    border: 1px solid #bebebe;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    height: 440px;
+    color: #282829;
+}

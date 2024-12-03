@@ -21,9 +21,7 @@ try {
         'users' => $db->selectCollection('users'),
         'google-users' => $db->selectCollection('google-users'),
         'user-profile' => $db->selectCollection('user-profile'),
-        'blogs' => $db->selectCollection('blogs'),
-        'blogs-categories' => $db->selectCollection('blogs-categories'),
-        'ratings' => $db->selectCollection('ratings')
+        'blog' => $db->selectCollection('blog')
     ];
 
     $connectionStatus = true;  // Set connection status to true if successful

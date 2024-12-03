@@ -1,0 +1,63 @@
+
+
+.community-main-container {
+    margin-top: 100px;
+    margin-left: 190px;
+    margin-right: 205px;
+}
+/* Container Layout */
+.community-container {
+    display: flex;
+}
+
+/* Container for rows */
+.community-container1 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Row layout */
+.community-row {
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    gap: 10px; /* Space between content boxes */
+}
+
+.community-image1 {
+    border: 1px solid #E3E4E5;
+    width: 100%; /* Make the image responsive and fit the container */
+    height: 120px; /* Maintain the aspect ratio */
+    object-fit: cover; /* Ensures the image fits within the container without distortion */
+}
+.community-content {
+    flex: 1; /* Ensures equal width */
+    max-width: 520px; /* Prevents boxes from getting too wide */
+    padding: 5px 8px 20px 5px;
+    height: 140px;
+    box-shadow: 0 6px 2px -2px gray;
+    background-color: white;
+    border: 2px solid #E3E4E5;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in, box-shadow 0.3s ease-in; /* Add smooth transition for transform and box-shadow */
+    border-radius: 5px;
+}
+
+.community-content:hover {
+    transform: translateY(-5px); /* Move the content upwards slightly */
+    box-shadow: 0 8px 6px -2px rgba(0, 0, 0, 0.1); /* Add a more prominent shadow on hover */
+}
+
+.community-content h3 {
+    margin: 0;
+    color: #000;
+}
+
+.community-content a {
+    text-decoration: none;
+    color: #000;
+}
+
+.community-com {
+    font-size: 20px;
+}
+

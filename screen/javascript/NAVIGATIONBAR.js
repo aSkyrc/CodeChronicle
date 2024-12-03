@@ -133,3 +133,10 @@ document.body.addEventListener('click', function () {
 
 // Initialize the icons state on page load
 document.addEventListener('DOMContentLoaded', setIconsState);
+
+
+function checkEnter(event) {
+  if (event.key === "Enter") {
+      document.getElementById("searchForm").submit(); // Submit the form when Enter is pressed
+  }
+}

@@ -1,0 +1,252 @@
+
+
+/* Allname Section */
+.community-allname {
+    display: flex;
+    position: sticky;
+    justify-content: center;
+    top: 0px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+
+.community-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+}
+
+.community-category h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.community-category button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #6c63ff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.community-category button:hover {
+    background-color: #0056b3;
+}
+
+/* Image Section */
+.community-img {
+
+    top: 100px;
+    left: 0;
+    right: 0;
+    z-index: 998;
+    background-color: white;
+    padding: 10px 0;
+    object-fit: contain;
+    
+}
+
+/* Main Container */
+.community-main-container-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+
+    padding-right: 150px;
+    padding-left: 50px;
+}
+
+.community-content-container {
+    flex: 3;
+    margin-bottom: 20px;
+}
+
+/* Blog Cards Layout */
+.community-blog-cards {
+    margin-left: 220px;
+}
+
+.community-blogs-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;  /* Align the card's body and image in a row */
+    flex-direction: row;  /* This ensures the content and image are side by side */
+}
+
+
+
+.community-card-header {
+    display: flex;
+    flex-direction: column; /* Stack user info vertically */
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.community-username {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.community-topic {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.community-card-body {
+    display: flex;
+    flex-direction: column; /* Stack body elements vertically */
+    align-items: center;
+    gap: 20px;
+}
+
+.community-card-body p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.community-card-body button {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.community-card-body button:hover {
+    background: #0056b3;
+}
+
+.community-code-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.community-blog-card {
+    display: flex;
+    flex-direction: column; /* Stack header and body vertically */
+    flex: 2;
+    padding: 10px;
+}
+
+.community-thumbnail {
+    display: flex;
+    flex-direction: column; /* Maintain the column layout for the image */
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px; /* Space between the card and image */
+    flex: 1;
+}
+
+.community-thumbnail img {
+    width: 100%;
+    height: 265px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.community-user-info {
+    display: flex;
+    flex-direction: column; /* Stack user info vertically */
+    align-items: flex-start;
+}
+
+.community-user-info .community-user-icon {
+    width: 70px; /* Set width for the user icon */
+    height: 70px; /* Set height for the user icon */
+    border-radius: 50%; /* Optional for a circular icon */
+    object-fit: cover; /* Ensures the image fits nicely */
+}
+.community-username, .community-topic {
+    display: flex;
+    align-items: center; /* Align icon and text vertically */
+    gap: 10px; /* Space between the inline icon and text */
+}
+
+.community-topic{
+    margin-top: -30px;
+    margin-left: 80px;
+}
+
+/* Sidebar */
+.community-sidebar {
+    flex: 1;
+    flex-direction: row;
+    position: sticky; /* Sticky positioning for sidebar */
+    top: 100px; /* Set top value to ensure it becomes sticky after header */
+    height: 380px;
+    max-width: 220px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* Make sure the sidebar stays above other content */
+    margin-right: 100px;
+}
+
+.community-top-blog h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.community-blog-highlight h4 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.community-blog-highlight img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.community-blog-highlight p {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.community-sidebar button {
+    position: absolute;
+    bottom: 20px; /* Adjust this value to add some space from the bottom */
+    left: 50%; /* Position the button in the center horizontally */
+    transform: translateX(-50%); /* Offset the left position by 50% of the button width to truly center it */
+    width: 40%; /* Or any width you prefer */
+    text-align: center;
+    background: #6c63ff;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Lalezar';
+}
+
+.community-sidebar button:hover {
+    background: #0056b3;
+}
+
+.community-category a {
+    text-decoration: none;
+}

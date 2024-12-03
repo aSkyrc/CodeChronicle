@@ -323,7 +323,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group-short">
                         <label for="shortDescription">Short Description</label>
                         <textarea id="shortDescription" name="shortDescription" required><?php echo htmlspecialchars($shortDescription); ?></textarea>
-                        <small class="char-count">0/200 characters</small>
+                        <small class="char-count">0/260 characters</small>
                     </div>
 
                     <div class="form-group-full">

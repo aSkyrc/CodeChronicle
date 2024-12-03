@@ -57,7 +57,6 @@ $filter = [
 // Fetch blog posts that match the user's interests
 $blogs = $blogCollection->find($filter);
 
-$shortDescription = isset($blog['shortDescription']) ? $blog['shortDescription'] : '';
 ?>
 
 <body>
@@ -102,7 +101,7 @@ $shortDescription = isset($blog['shortDescription']) ? $blog['shortDescription']
 
                         // Default values if user not found
                         $authorName = $authorData['username'] ?? 'Guest';
-                        $authorPicture = $authorData['picture'] ?? '../logos/userDefault.png'; // Regular user picture
+                        $authorPicture = $authorData['picture'] ?? '../logos/userDefault.png'; // Regular user picture+
                         // If it's a Google user, use their Google picture URL
                         if (isset($authorData['google_user']) && $authorData['google_user']) {
                             $authorPicture = $authorData['picture'] ?? '../logos/userDefault.png';  // Google user's picture
@@ -112,10 +111,12 @@ $shortDescription = isset($blog['shortDescription']) ? $blog['shortDescription']
                         $authorPicturePath = '../uploads/' . basename($authorPicture);
                     ?>
 
-                    <div class="post-card">
+                    <div class="post-card" style="margin-top: 20px">
                         <div class="homepage-content-container">
                             <div class="homepage-user-info">
+                            <a href="visit-profile.php?user_id=<?php echo urlencode((string)$authorId); ?>">
                                 <img src="<?php echo htmlspecialchars($authorPicturePath); ?>" alt="User Image">
+                            </a>
                                 <div class="user-info">
                                     <div class="user-name-rating">
                                         <div class="user-name"><?php echo htmlspecialchars($authorName); ?> <span class="dot">•</span></div>
@@ -154,7 +155,7 @@ $shortDescription = isset($blog['shortDescription']) ? $blog['shortDescription']
 
                             <button class="continue-button" onclick="location.href='blog-post.php?_id=<?php echo htmlspecialchars((string)$blog['_id']); ?>';">Continue reading...</button>
                         </div>
-                        <img src="<?php echo htmlspecialchars($blog['thumbnailPath']); ?>" alt="Post Image">
+                        <img class="homepage-thumbnail" src="<?php echo htmlspecialchars($blog['thumbnailPath']); ?>"alt="Post Image" width="400px" height="500px">
                     </div>
                 <?php endforeach; ?>
                 <div class="homepage-sidebar-right">

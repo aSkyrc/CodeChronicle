@@ -106,7 +106,7 @@ if (!empty($savedBlogIds)) {
             </aside>
 
             <div class="homepage-center-content" id="post-container">
-                <h5 class="savedblog">Saved Blogs</h5>
+                <h5 class="savedblog" style="text-align: center;">Saved Blogs</h5>
                 <?php foreach ($blogs as $blog): ?>
                     <?php
                         // Fetch user details as in the original code
@@ -116,7 +116,7 @@ if (!empty($savedBlogIds)) {
                         $authorPicture = $authorData['picture'] ?? '../logos/userDefault.png';
                         $authorPicturePath = '../uploads/' . basename($authorPicture);
                     ?>
-                    <div class="post-card">
+                    <div class="post-card" style="margin: 0 auto; margin-bottom: 20px; ">
                        
                         <div class="homepage-content-container">
                             <div class="homepage-user-info">
