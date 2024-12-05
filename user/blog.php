@@ -154,7 +154,7 @@ if (!empty($images['name'][0])) { // Check if at least one image is uploaded
                     <li><a href="#" id="add-image">Add Image</a></li>
                     <li><a href="#" id="add-video-link">Add Video Link</a></li>
                 </ul>
-                <p>Note: Make sure you use the actual format of your blog.</p>
+                <p>Note: This is the actual format of your blog.</p>
             </div>
 
             <div class="content">

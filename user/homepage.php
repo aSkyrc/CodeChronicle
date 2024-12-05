@@ -176,7 +176,7 @@ $blogs = $blogCollection->find(
     <div class="homepage-modal-content">
         <h3>What do you want to add?</h3>
        
-        <<form method="POST" action="addInterest.php" id="interest-form">
+        <form method="POST" action="addInterest.php" id="interest-form">
             <ul>
                 <li><input type="checkbox" name="interest[]" value="Frontend Development" <?php echo in_array('Frontend Development', $interestsArray) ? 'checked' : ''; ?>> Frontend Development</li>
                 <li><input type="checkbox" name="interest[]" value="Backend Development" <?php echo in_array('Backend Development', $interestsArray) ? 'checked' : ''; ?>> Backend Development</li>

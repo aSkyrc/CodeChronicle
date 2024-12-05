@@ -51,7 +51,7 @@ $isInterested = in_array($communityName, $interests);
             <div class="community-visit-blog-cards">
                 <?php if (empty($blogs)): ?>
                     <!-- Show this message if no blogs are found -->
-                    <p style="text-align: center; font-size: 18px; margin-top: 20px;">
+                    <p style="text-align: center; font-size: 18px; margin-top: 20px; color:red;">
                         No posts about DevOps and Cloud Computing yet.
                     </p>
                 <?php else: ?>

@@ -52,7 +52,7 @@ $isInterested = in_array($communityName, $interests);
                 <?php if (empty($blogs)): ?>
                     <!-- Show this message if no blogs are found -->
                     <p style="text-align: center; font-size: 18px; margin-top: 20px; color:red;">
-                        No posts about Data Science and Machine Learningyet.
+                        No posts about Data Science and Machine Learning yet.
                     </p>
                 <?php else: ?>
                     <?php foreach ($blogs as $blog): ?>

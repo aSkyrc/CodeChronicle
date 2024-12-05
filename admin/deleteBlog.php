@@ -36,8 +36,17 @@ error_log("Converted Blog ObjectId: " . $blogObjectId);
 
 // Ensure $blogCollection is initialized properly
 $blogCollection = $db->selectCollection('blog'); // Check this initialization
+$notificationsCollection = $db->selectCollection('notifications'); // Notifications collection
 
 try {
+    // Find the blog to retrieve its author information and title
+    $blog = $blogCollection->findOne(['_id' => $blogObjectId]);
+
+    if (!$blog) {
+        echo json_encode(['success' => false, 'message' => 'Blog not found.']);
+        exit();
+    }
+
     // Attempt to delete the blog post
     $result = $blogCollection->deleteOne(['_id' => $blogObjectId]);
 
@@ -46,7 +55,20 @@ try {
 
     // Check if deletion was successful
     if ($result->getDeletedCount() > 0) {
-        echo json_encode(['success' => true, 'message' => 'Blog deleted successfully.']);
+        // Create a notification for the blog author
+        $userId = $blog['user_id']; // Assuming the blog document has a `user_id` field
+        $blogTitle = $blog['title']; // Assuming the blog document has a `title` field
+
+        $notificationData = [
+            'user_id' => $userId,
+            'message' => "Your blog '{$blogTitle}' was deleted by the admin.",
+            'created_at' => new MongoDB\BSON\UTCDateTime(),
+            'is_read' => false // Default unread status
+        ];
+
+        $notificationsCollection->insertOne($notificationData);
+
+        echo json_encode(['success' => true, 'message' => 'Blog deleted successfully and notification sent.']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Blog not found or already deleted.']);
     }

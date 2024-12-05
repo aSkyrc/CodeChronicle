@@ -373,3 +373,30 @@ left: 10px
 .remove-btn:hover {
   color: darkred;
 }
+
+.preview-button {
+  background-color: #6C63FF;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 40px;
+  width: 160px;
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: 'Lalezar';
+
+}
+
+.go-back-btn-preview {
+  background-color: #6C63FF;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 40px;
+  width: 160px;
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 100px;
+  font-family: 'Lalezar';
+}
+

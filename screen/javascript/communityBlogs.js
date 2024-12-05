@@ -1,5 +1,24 @@
 
-let elementOrder = []; // Track the order of added elements
+       // Function to set the selected community category in the dropdown
+       window.onload = function() {
+        // Retrieve the 'community' parameter from the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var selectedCommunity = urlParams.get('community');
+        
+        if (selectedCommunity) {
+            // Set the category dropdown to the selected community
+            var categorySelect = document.getElementById('category');
+            for (var i = 0; i < categorySelect.options.length; i++) {
+                if (categorySelect.options[i].value === selectedCommunity) {
+                    categorySelect.selectedIndex = i; // Set the selected index
+                    break;
+                }
+            }
+        }
+    }
+
+
+    let elementOrder = []; // Track the order of added elements
 
 document.getElementById('add-horizontal-description').addEventListener('click', function () {
     addElement('horizontalDescription');
@@ -21,7 +40,7 @@ document.getElementById('add-video-link').addEventListener('click', function () 
 const maxCharacters = {
     horizontalDescription: 360,
     blogDescription: 532,
-    shortDescription: 200,
+    shortDescription: 260,
     fullBlogDescription: 532
 };
 

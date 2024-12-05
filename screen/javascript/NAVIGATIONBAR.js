@@ -140,3 +140,27 @@ function checkEnter(event) {
       document.getElementById("searchForm").submit(); // Submit the form when Enter is pressed
   }
 }
+
+function deleteNotification(item) {
+  const notificationId = item.getAttribute('data-id');
+
+  // Send AJAX request to delete the notification
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '', true); // Post to the same page
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function () {
+      if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          if (response.success) {
+              // Hide the notification from the DOM
+              item.style.display = 'none';
+
+          } else {
+              console.error('Failed to delete notification:', response.message);
+          }
+      } else {
+          console.error('Error connecting to the server.');
+      }
+  };
+  xhr.send('notification_id=' + notificationId);
+}

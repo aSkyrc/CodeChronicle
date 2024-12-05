@@ -122,16 +122,14 @@ body {
   top: 45px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 17px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 200px;
-  height: 90px;
-  padding: 5px;
-  
+  z-index: 100; /* Ensure it appears above other elements */
 }
+
 
 .profile .dropdown{
   display: none;
@@ -175,3 +173,21 @@ body {
   color: #020202;
 }
 
+.notification-item {
+  font-size: 14px;
+  border-top: 1px solid #ccc; /* Top border */
+  border-bottom: 1px solid #ccc; /* Bottom border */
+  border-left: none; /* No left border */
+  border-right: none; /* No right border */
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0.1em 0.5em;
+  font-size: 0.8em;
+}
