@@ -234,7 +234,8 @@ hr {
     display: flex;
     justify-content: center; /* Horizontally center the video */
     align-items: center; /* Vertically center if needed */
-    margin-top: 70px;
+    margin-top: 30px;
+    object-fit: cover;
 }
 
 .blogpost-imageuploadsection img {
@@ -269,4 +270,123 @@ hr {
 
 .submit-rating-blog:hover {
     text-decoration: underline;
+}
+
+/* Tablet (Portrait) */
+@media (max-width: 768px) {
+    .blogpost-sidebar {
+        width: 180px;
+        height: auto; /* Adjust height */
+        position: relative;
+        left: 10px;
+        top: 60px;
+    }
+
+    .blogpost-main-content {
+        margin-right: 0;
+        margin-left: 10px;
+    }
+
+    .blogpost-title {
+        font-size: 26px; /* Adjust font size */
+        margin-bottom: 10px;
+    }
+
+    .blogpost-category {
+        font-size: 20px; /* Adjust category font size */
+    }
+
+    .blogpost-meta {
+        font-size: 14px; /* Adjust meta font size */
+    }
+
+    .blogpost-shortdescription {
+        font-size: 16px;
+        width: 100%; /* Adjust width */
+    }
+
+    .text-content {
+        padding: 10px;
+    }
+
+    .img-thumbnail img {
+        width: 100%; /* Make image responsive */
+        height: auto;
+    }
+
+    .blogpost-content-container {
+        flex-direction: column;
+    }
+
+    .go-back-btn {
+        width: 100%;
+        font-size: 16px; /* Smaller font for tablets */
+    }
+
+    .submit-rating-blog {
+        font-size: 14px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    .blogpost-sidebar {
+        width: 100%;
+        position: relative;
+        left: 0;
+        top: 20px; /* Adjust the top spacing */
+        height: auto; /* Flexible height */
+        padding: 10px;
+    }
+
+    .blogpost-main-content {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .blogpost-title {
+        font-size: 24px; /* Adjust for smaller screens */
+        margin-bottom: 10px;
+    }
+
+    .blogpost-category {
+        font-size: 18px; /* Adjust category font size */
+    }
+
+    .blogpost-meta {
+        font-size: 12px; /* Adjust for smaller screens */
+    }
+
+    .blogpost-shortdescription {
+        font-size: 14px; /* Smaller font size */
+        width: 100%; /* Full width */
+    }
+
+    .img-thumbnail img {
+        width: 100%; /* Make image responsive */
+        height: auto;
+    }
+
+    .blogpost-content-container {
+        flex-direction: column; /* Stack the content vertically */
+        padding: 10px;
+    }
+
+    .star-rating {
+        font-size: 25px; /* Smaller star rating */
+    }
+
+    .go-back-btn {
+        width: 100%;
+        font-size: 16px; /* Adjust button size */
+    }
+
+    .youtube-video-container iframe {
+        width: 100%;
+        height: 250px; /* Adjust video size */
+    }
+
+    .submit-rating-blog {
+        font-size: 12px; /* Adjust font size */
+    }
 }

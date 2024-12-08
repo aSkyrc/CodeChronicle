@@ -400,3 +400,94 @@ left: 10px
   font-family: 'Lalezar';
 }
 
+@media (max-width: 900px) {
+  .sidebar {
+    width: 200px; /* Adjust sidebar for smaller screens */
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 10px;
+    margin-right: 10px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 15px; /* Adjust font size for smaller screens */
+  }
+
+  .container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Adjust styles for very small devices like phones */
+  .Post-Blog-Page {
+    margin: 0 15px;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    position: static; /* Make sidebar static */
+  }
+
+  .content {
+    margin-left: 0;
+    margin-top: 10px;
+    padding: 10px;
+    margin-right: 0;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 14px;
+  }
+
+  .icon-container-delete,
+  .icon-container-back {
+    flex-direction: column; /* Stack icons vertically */
+    margin: 20px 0;
+  }
+
+  .upload-btn button {
+    width: 100%; /* Make button full-width on mobile */
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .form-group-horizontal textarea {
+    width: 100%; /* Make textarea full-width on mobile */
+    height: 200px;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Adjust for very small devices */
+  .sidebar {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .content {
+    padding: 10px;
+    margin-right: 0;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 13px;
+  }
+
+  .upload-btn button {
+    font-size: 14px;
+    padding: 12px;
+  }
+}

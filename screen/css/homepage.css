@@ -142,7 +142,7 @@
   margin-bottom: 20px;
   overflow: hidden; /* Ensure no scroll within the card itself */
   justify-content: space-between;
-  transform: translate(5%, 0%); /* Adjust X and Y axes */
+  transform: translate(2.5%, 0%); /* Adjust X and Y axes */
 }
 
 .home-page-container, 
@@ -394,4 +394,115 @@
 
 .load-more-btn:hover {
   background-color: #0056b3;
+}
+
+
+/* Responsive for tablets */
+@media screen and (max-width: 768px) {
+  .home-page-container {
+    flex-direction: column; /* Stack items vertically */
+    margin-top: 20px;
+  }
+
+  .homepage-sidebar {
+    width: 100%;
+    position: static;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  .homepage-sidebar-right {
+    width: 100%;
+    position: static;
+    margin: 20px auto;
+    height: auto;
+  }
+
+  .post-card {
+    width: calc(90% - 20px); /* Adjust post card width */
+    height: auto; /* Allow post cards to grow as needed */
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .post-card img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .homepage-text-content {
+    padding-left: 10px;
+  }
+
+  .homepage-user-info {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .homepage-user-info img {
+    margin-left: 0;
+  }
+
+  .homepage-modal-content {
+    width: 80%; /* Adjust modal width for tablets */
+  }
+}
+
+/* Responsive for cellphones */
+@media screen and (max-width: 480px) {
+  .home-page-container {
+    flex-direction: column;
+    margin: 0;
+    padding: 0 10px;
+  }
+
+  .homepage-sidebar {
+    width: 100%;
+    position: static;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #f0f0f0; /* Subtle background for better visibility */
+  }
+
+  .homepage-user-info-sidebar {
+    padding: 10px;
+    padding-bottom: 20px;
+  }
+
+  .post-card {
+    width: 100%; /* Full width */
+    margin-bottom: 10px;
+  }
+
+  .post-card img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+  }
+
+  .homepage-text-content p {
+    font-size: 18px; /* Adjust text size for small screens */
+  }
+
+  .homepage-modal-content {
+    width: 90%; /* Adjust modal width for mobiles */
+    margin: 20% auto;
+  }
+
+  .post-blog-btn {
+    width: 100%;
+    bottom: auto;
+    left: 0;
+    position: relative;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .continue-button {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
 }

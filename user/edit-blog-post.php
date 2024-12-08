@@ -47,7 +47,7 @@ foreach ($existingElements as $index => $element) {
             $dynamicContentHtml .= '<small class="char-count">0/' . htmlspecialchars($maxCharacters['horizontalDescription']) . ' characters</small>';
             $dynamicContentHtml .= '</div>';
             break;
-    
+
         case 'blogDescription':
             $dynamicContentHtml .= '<div class="form-group-full" id="' . $element['id'] . '">';
             $dynamicContentHtml .= '<div class="label-container">';
@@ -58,17 +58,18 @@ foreach ($existingElements as $index => $element) {
             $dynamicContentHtml .= '<small class="char-count">0/' . htmlspecialchars($maxCharacters['blogDescription']) . ' characters</small>';
             $dynamicContentHtml .= '</div>';
             break;
-    
-        case 'image':
-            $dynamicContentHtml .= '<div class="form-group" id="' . $element['id'] . '">';
-            $dynamicContentHtml .= '<div class="label-container">';
-            $dynamicContentHtml .= '<label for="image-upload">Image</label>';
-            $dynamicContentHtml .= '<button type="button" class="remove-btn" onclick="removeElement(this)">x</button>';
-            $dynamicContentHtml .= '</div>';
-            $dynamicContentHtml .= '<input type="file" name="images[' . $element['id'] . ']" class="image" accept="image/*">';
-            $dynamicContentHtml .= '</div>';
-            break;
-    
+
+            case 'image':
+                $dynamicContentHtml .= '<div class="form-group" id="' . $element['id'] . '">';
+                $dynamicContentHtml .= '<div class="label-container">';
+                $dynamicContentHtml .= '<label for="image-upload">Image</label>';
+                $dynamicContentHtml .= '<button type="button" class="remove-btn" onclick="removeElement(this)">x</button>';
+                $dynamicContentHtml .= '</div>';
+                $dynamicContentHtml .= '<input type="file" name="images[' . $element['id'] . ']" class="image" accept="image/*">';
+                $dynamicContentHtml .= '<input type="hidden" name="existingImages[' . $element['id'] . ']" value="' . htmlspecialchars($element['content']) . '">';
+                $dynamicContentHtml .= '</div>';
+                break;
+
         case 'videoLink':
             $dynamicContentHtml .= '<div class="form-group" id="' . $element['id'] . '">';
             $dynamicContentHtml .= '<div class="label-container">';
@@ -105,11 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $existingElements = $existingBlog['elements'] ?? [];
 
-    // Prepare the uploads directory
-    $uploadsDir = '../uploads/';
-    if (!is_dir($uploadsDir)) {
-        mkdir($uploadsDir, 0755, true);
-    }
+     // Prepare upload directory
+     $uploadsDir = '../uploads/';
+     if (!is_dir($uploadsDir)) {
+         mkdir($uploadsDir, 0755, true);
+     }
+ 
 
     // Handle thumbnail upload
     $thumbnailPath = $existingBlog['thumbnailPath'] ?? ''; // Preserve existing thumbnail if not replaced
@@ -119,155 +121,121 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Handle additional image uploads with validation
-    $uploadedImages = [];
-    if (!empty($images['name'][0])) { // Check if at least one image is uploaded
-        foreach ($images['name'] as $key => $imageName) {
-            $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
-            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+// Handle additional image uploads with validation
+// Handle additional image uploads with validation
+$uploadedImages = [];
+if (!empty($images['name'][0])) { // Check if at least one image is uploaded
+    foreach ($images['name'] as $key => $imageName) {
+        $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+        $allowedExtensions = ['jpg', 'jpeg', 'png'];
 
-            if (in_array($imageExtension, $allowedExtensions)) {
-                if ($images['error'][$key] === UPLOAD_ERR_OK) {
-                    // Prepare file path for the uploaded image
-                    $imagePath = $uploadsDir . uniqid() . '_' . basename($imageName);
+        if (in_array($imageExtension, $allowedExtensions)) {
+            if ($images['error'][$key] === UPLOAD_ERR_OK) {
+                // Generate a unique file name to avoid overwriting existing files
+                $imagePath = $uploadsDir . uniqid() . '_' . basename($imageName);
 
-                    // Move the uploaded image to the destination folder
-                    if (move_uploaded_file($images['tmp_name'][$key], $imagePath)) {
-                        // Map the image to its corresponding element ID
-                        $uploadedImages[$images['element_id'][$key]] = $imagePath; // `element_id` comes from the form
-                    } else {
-                        echo '<script>alert("Failed to upload image: ' . $imageName . '");</script>';
-                    }
+                // Move the uploaded image to the destination folder
+                if (move_uploaded_file($images['tmp_name'][$key], $imagePath)) {
+                    // Use the element ID from the elementOrder array to map the uploaded image
+                    $uploadedImages[$elementOrder[$key]['id']] = $imagePath; // Store the server path
+                } else {
+                    echo '<script>alert("Failed to upload image: ' . $imageName . '");</script>';
                 }
-            } else {
-                echo '<script>alert("Only JPG, JPEG, and PNG files are allowed for uploaded images.");</script>';
             }
-        }
-    }
-
-    // Step 1: Update existing elements
-    $updatedElements = [];
-    foreach ($existingElements as $existingElement) {
-        // Skip removed elements
-        if (in_array($existingElement['id'], $removedElements)) {
-            continue;
-        }
-
-        // Update the content based on the type
-        switch ($existingElement['type']) {
-            case 'blogDescription':
-                if (isset($blogDescriptions[$existingElement['id']])) {
-                    $existingElement['content'] = $blogDescriptions[$existingElement['id']];
-                }
-                break;
-
-            case 'horizontalDescription':
-                if (isset($horizontalDescriptions[$existingElement['id']])) {
-                    $existingElement['content'] = $horizontalDescriptions[$existingElement['id']];
-                }
-                break;
-
-            case 'image':
-                if (isset($existingImages[$existingElement['id']])) {
-                    // Replace with new image if uploaded, else retain the existing one
-                    $existingElement['content'] = $uploadedImages[$existingElement['id']] ?? $existingImages[$existingElement['id']];
-                }
-                break;
-
-            case 'videoLink':
-                if (isset($videoLinks[$existingElement['id']])) {
-                    $existingElement['content'] = $videoLinks[$existingElement['id']];
-                }
-                break;
-
-            default:
-                break; // Handle any other types if necessary
-        }
-
-        $updatedElements[] = $existingElement;
-    }
-
-    // Step 2: Add new elements
-    foreach ($elementOrder as $order) {
-        $existingIds = array_column($updatedElements, 'id');
-        if (!in_array($order['id'], $existingIds)) {
-            switch ($order['type']) {
-                case 'blogDescription':
-                    if (!empty($blogDescriptions)) {
-                        $updatedElements[] = [
-                            'id' => $order['id'],
-                            'type' => 'blogDescription',
-                            'content' => array_shift($blogDescriptions),
-                        ];
-                    }
-                    break;
-
-                case 'horizontalDescription':
-                    if (!empty($horizontalDescriptions)) {
-                        $updatedElements[] = [
-                            'id' => $order['id'],
-                            'type' => 'horizontalDescription',
-                            'content' => array_shift($horizontalDescriptions),
-                        ];
-                    }
-                    break;
-
-                case 'image':
-                    if (!empty($uploadedImages)) {
-                        $updatedElements[] = [
-                            'id' => $order['id'],
-                            'type' => 'image',
-                            'content' => array_shift($uploadedImages),
-                        ];
-                    }
-                    break;
-
-                case 'videoLink':
-                    if (!empty($videoLinks)) {
-                        $updatedElements[] = [
-                            'id' => $order['id'],
-                            'type' => 'videoLink',
-                            'content' => array_shift($videoLinks),
-                        ];
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
-
-    // Step 3: Prepare updated blog data
-    $blogData = [
-        'user_id' => $_SESSION['user_id'], // User ID from session
-        'title' => $title ?: $existingBlog['title'], // Preserve title if not updated
-        'category' => $category ?: $existingBlog['category'], // Preserve category if not updated
-        'thumbnailPath' => $thumbnailPath,
-        'shortDescription' => $shortDescription ?: $existingBlog['shortDescription'],
-        'fullDescription' => $fullDescription ?: $existingBlog['fullDescription'],
-        'elements' => $updatedElements,
-        'updatedAt' => time(),
-    ];
-
-    // Step 4: Save the blog data back to the database
-    try {
-        $result = $blogsCollection->updateOne(
-            ['_id' => new MongoDB\BSON\ObjectId($blogId)],
-            ['$set' => $blogData]
-        );
-
-        if ($result->getModifiedCount() > 0) {
-            echo '<script>alert("Blog updated successfully!"); window.location.href = "profile.php";</script>';
-        } else {
-            echo '<script>alert("No changes made.");</script>';
-        }
-    } catch (Exception $e) {
-        echo '<script>alert("Error updating blog: ' . $e->getMessage() . '");</script>';
+        } 
     }
 }
+
+
+
+   // Step 1: Update existing elements
+// Step 1: Update existing elements
+$updatedElements = [];
+foreach ($existingElements as $existingElement) {
+    if (in_array($existingElement['id'], $removedElements)) {
+        continue;
+    }
+
+    if (!isset($existingElement['id'])) {
+        $existingElement['id'] = uniqid("element-" . time() . "-");
+    }
+
+      // Handle image elements
+      if ($existingElement['type'] === 'image') {
+        if (isset($uploadedImages[$existingElement['id']])) {
+            // Use the new uploaded image
+            $existingElement['content'] = $uploadedImages[$existingElement['id']];
+        } else {
+            // Retain the existing image
+            $existingElement['content'] = $existingImages[$existingElement['id']] ?? $existingElement['content'];
+        }
+    }
+
+
+    // Update content for other element types
+    switch ($existingElement['type']) {
+        case 'blogDescription':
+            if (array_key_exists($existingElement['id'], $blogDescriptions)) {
+                $existingElement['content'] = $blogDescriptions[$existingElement['id']];
+            }
+            break;
+
+        case 'horizontalDescription':
+            if (array_key_exists($existingElement['id'], $horizontalDescriptions)) {
+                $existingElement['content'] = $horizontalDescriptions[$existingElement['id']];
+            }
+            break;
+
+        case 'videoLink':
+            if (array_key_exists($existingElement['id'], $videoLinks)) {
+                $existingElement['content'] = $videoLinks[$existingElement['id']];
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    $updatedElements[] = $existingElement;
+}
+
+foreach ($elementOrder as $order) {
+    $existingContents = array_column($updatedElements, 'content');
+
+    if (empty($existingContents) || !in_array($order['content'], $existingContents)) {
+        if ($order['type'] === 'image' && isset($uploadedImages[$order['id']])) {
+            // Assign the correct uploaded image path
+            $order['content'] = $uploadedImages[$order['id']];
+        }
+
+        $updatedElements[] = [
+            'id' => uniqid("element-" . time() . "-"),
+            'type' => $order['type'],
+            'content' => $order['content'],
+        ];
+    }
+}
+
+
+// Update the blog post in the database
+$updateData = [
+    'title' => $title,
+    'category' => $category,
+    'shortDescription' => $shortDescription,
+    'fullDescription' => $fullDescription,
+    'thumbnailPath' => $thumbnailPath,
+    'elements' => $updatedElements,
+];
+
+$blogsCollection->updateOne(
+    ['_id' => new MongoDB\BSON\ObjectId($blogId)],
+    ['$set' => $updateData]
+);
+
+
+echo '<script>alert("Blog updated successfully!");  window.location.href = "profile.php";</script>';
+}
 ?>
-
-
 
 
 <form id="blog-form" method="POST" enctype="multipart/form-data">
@@ -319,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label for="thumbnail">Thumbnail</label>
-                            <input type="file" name="thumbnail" id="thumbnail" accept="image/*" required>
+                            <input type="file" name="thumbnail" id="thumbnail" accept="image/*" >
                         </div>
                     </div>
 
@@ -355,7 +323,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 
-<script src="../screen/javascript/UPDATEBLOG.js"></script>
+<script src="../screen/javascript/updateblogs.js"></script>
 
 </body>
 </html>

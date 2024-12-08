@@ -15,6 +15,7 @@ function getblogRating($blogRating) {
 function getuserRating($userRating) {
     return isset($userRating) && $userRating !== null ? $userRating : 0; // Return rating or 0 if null
 }
+
 // Get the blog ID from the URL (ensure it's passed)
 $blogId = $_GET['_id'] ?? null;
 
@@ -154,7 +155,7 @@ if ($blogId) {
             <?php foreach ($elements as $element): ?>
                 <?php if ($element['type'] == 'horizontalDescription'): ?>
                 <div class="blogpost-horizontaldescription">
-                    <div class="horizontaldescription">T<?php echo nl2br(htmlspecialchars($element['content'])); ?></div>
+                    <div class="horizontaldescription"><?php echo nl2br(htmlspecialchars($element['content'])); ?></div>
                 </div>
 
                 <?php elseif ($element['type'] == 'videoLink'): ?>
@@ -172,19 +173,20 @@ if ($blogId) {
 
             <?php elseif ($element['type'] == 'blogDescription'): ?>
                 <div class="blogpost-blogcontentdescription">
-                    <div class="blogcontentdescription">T<?php echo nl2br(htmlspecialchars($element['content'])); ?>
+                    <div class="blogcontentdescription"><?php echo nl2br(htmlspecialchars($element['content'])); ?>
                         </div>
                 </div>
 
                 <?php elseif ($element['type'] == 'image'): ?>
                 <div class="blogpost-imageuploadsection">
-                    <img src="../uploads/hanni-newjeans-get-up-4k-wallpaper-uhdpaper.com-948@1@k.jpg" alt="Uploaded Content" />
+                    <img src="<?php echo htmlspecialchars($element['content']); ?>" alt="Uploaded Content" / width="500px" height="300px">
                 </div>
                 <?php endif; ?>
             <?php endforeach; ?>    
             </div>
         </div>
 </div>    
+    
 
     <script>
  document.addEventListener('DOMContentLoaded', () => {

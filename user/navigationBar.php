@@ -82,14 +82,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notification_id'])) {
     <meta http-equiv="expires" content="0">
     <link rel="shortcut icon" href="../logos/CClogo.jpg" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../screen/css/NavigationBar.css">
-    <link rel="stylesheet" href="../screen/css/blog.css">
+    <link rel="stylesheet" href="../screen/css/navigationbar.css">
+    <link rel="stylesheet" href="../screen/css/blogs.css">
     <link rel="stylesheet" href="../screen/css/SETTINGS.css">
-    <link rel="stylesheet" href="../screen/css/homepage.css">
+    <link rel="stylesheet" href="../screen/css/HOMEPAGE.css">
     <link rel="stylesheet" href="../screen/css/VIEWBLOG.css">
     <link rel="stylesheet" href="../screen/css/Community.css">
     <link rel="stylesheet" href="../screen/css/community-visit.css">
-    <link rel="stylesheet" href="../screen/css/visit-profile.css">
+    <link rel="stylesheet" href="../screen/css/VISIT-PROFILE.css">
     <link rel="stylesheet" href="../screen/css/Search.css">
     <title>Code Chronicle</title>
 </head>
