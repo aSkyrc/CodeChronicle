@@ -126,7 +126,7 @@ if (!empty($savedBlogIds)) {
                         // Ensure picture path is correct
                         $authorPicturePath = htmlspecialchars($authorPicture);
                     ?>
-                    <div class="post-card" data-id="<?php echo htmlspecialchars((string)$blog['_id']); ?>" style="margin: 0 auto; margin-bottom: 20px; margin-top: 40px">
+                    <div class="post-card" data-id="<?php echo htmlspecialchars((string)$blog['_id']); ?>" style="margin: 0 auto; margin-bottom: 20px; margin-top: 40px; margin-right: 480px;">
                         <div class="homepage-content-container">
                             <div class="homepage-user-info">
                                 <img src="<?php echo $authorPicturePath; ?>" alt="User Image">

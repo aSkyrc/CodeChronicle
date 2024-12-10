@@ -142,7 +142,7 @@
   margin-bottom: 20px;
   overflow: hidden; /* Ensure no scroll within the card itself */
   justify-content: space-between;
-  transform: translate(2.5%, 0%); /* Adjust X and Y axes */
+  transform: translate(3.5%, 0%); /* Adjust X and Y axes */
 }
 
 .home-page-container, 

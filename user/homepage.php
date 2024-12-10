@@ -117,7 +117,7 @@ $blogs = $blogCollection->find(
                         $authorPicturePath = htmlspecialchars($authorPicture);
                     ?>
 
-                    <div class="post-card" style="margin-top: 20px">
+                    <div class="post-card" style="margin-top: 20px; margin-right: 480px;" >
                         <div class="homepage-content-container">
                             <div class="homepage-user-info">
                                 <a href="visit-profile.php?user_id=<?php echo urlencode((string)$authorId); ?>">
@@ -126,11 +126,13 @@ $blogs = $blogCollection->find(
                                 <div class="user-info">
                                     <div class="user-name-rating">
                                         <div class="user-name"><?php echo htmlspecialchars($authorName); ?> <span class="dot">•</span></div>
-                                        <div class="rating"><?php 
+                                        <div class="rating">(
+                                        <?php 
                                             // Check if the rate is null or not set, and default to 0
-                                            $rate = isset($blog['rate']) ? $blog['rate'] : 0;
-                                            echo htmlspecialchars($rate); 
-                                        ?></div>
+                                            $rate = isset($blog['rating']) ? $blog['rating'] : 0;
+                                            echo number_format($rate, 1); 
+                                        ?>)
+                                        </div>
                                     </div>
                                     <div class="category"><?php echo htmlspecialchars($blog['category'] ?? 'Uncategorized'); ?></div> <!-- Category -->
                                 </div>

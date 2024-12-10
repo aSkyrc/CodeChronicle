@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form id="blog-form" method="POST" enctype="multipart/form-data">
     <div class="Post-Blog-Page">
-        <a href="community.php">
+    <a href="javascript:history.back();">
             <div class="icon-container-back">
                 <img src="https://cdn-icons-png.flaticon.com/512/3916/3916840.png" alt="Back Icon" class="icon-back">
             </div>

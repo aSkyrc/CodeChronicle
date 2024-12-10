@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notification_id'])) {
     <link rel="stylesheet" href="../screen/css/navigationbar.css">
     <link rel="stylesheet" href="../screen/css/blogs.css">
     <link rel="stylesheet" href="../screen/css/SETTINGS.css">
-    <link rel="stylesheet" href="../screen/css/HOMEPAGE.css">
+    <link rel="stylesheet" href="../screen/css/homepage.css">
     <link rel="stylesheet" href="../screen/css/VIEWBLOG.css">
     <link rel="stylesheet" href="../screen/css/Community.css">
     <link rel="stylesheet" href="../screen/css/community-visit.css">

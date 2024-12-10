@@ -5,81 +5,118 @@ use MongoDB\BSON\ObjectId;
 
 // Get data from the POST request
 $data = json_decode(file_get_contents('php://input'), true);
+
 $blogId = $data['blogId'] ?? null;
-$userId = $data['userId'] ?? null;
+$userId = $data['userId'] ?? null; // This is the logged-in user's ID
 $rating = $data['rating'] ?? null;
 
-if ($blogId && $userId && $rating !== null) {
-    try {
-        // Convert the string _id to ObjectId
-        $objectId = new ObjectId($blogId);
-        $userObjectId = new ObjectId($userId);
+// Validate input data
+if (!$blogId || !$userId || $rating === null || $rating < 1 || $rating > 5) {
+    echo json_encode(['success' => false, 'message' => 'Invalid input data.']);
+    exit();
+}
 
-        // Access the blog collection
-        $collection = $db->blog;
+try {
+    // Convert string IDs to ObjectId
+    $blogObjectId = new ObjectId($blogId);
+    $userObjectId = new ObjectId($userId);
 
-        // Check if the blog exists
-        $blog = $collection->findOne(['_id' => $objectId]);
-        if (!$blog) {
-            echo json_encode(['success' => false, 'message' => 'Blog not found']);
-            exit();
-        }
+    // Access blog collection
+    $blogCollection = $db->blog;
+    $blog = $blogCollection->findOne(['_id' => $blogObjectId]);
 
-        // Check if the user has already rated this blog
-        $userCollection = $db->users; // Check in the 'users' collection
+    if (!$blog) {
+        echo json_encode(['success' => false, 'message' => 'Blog not found.']);
+        exit();
+    }
+
+    // The user rating the blog
+    // Check if the logged-in user has already rated this blog
+    $userCollection = $db->users;
+    $user = $userCollection->findOne(['_id' => $userObjectId]);
+
+    // If the user is not found, check google-users collection
+    if (!$user) {
+        $userCollection = $db->selectCollection('google-users');
         $user = $userCollection->findOne(['_id' => $userObjectId]);
+    }
 
-        if (!$user) {
-            // If the user is not found in the 'users' collection, check the 'google-users' collection
-            $userCollection = $db->selectCollection('google-users');
-            $user = $userCollection->findOne(['_id' => $userObjectId]);
+    if (!$user) {
+        echo json_encode(['success' => false, 'message' => 'User not found.']);
+        exit();
+    }
+
+    // Check if the logged-in user has already rated this blog
+    $ratedBlogs = $user['ratedBlogs'] ?? [];
+    if ($ratedBlogs instanceof MongoDB\Model\BSONArray) {
+        $ratedBlogs = $ratedBlogs->getArrayCopy(); // Convert BSONArray to a PHP array
+    }
+
+    if (in_array($blogId, $ratedBlogs)) {
+        echo json_encode(['success' => false, 'message' => 'You have already rated this blog.']);
+        exit();
+    }
+
+    // Add blog ID to the user's ratedBlogs
+    $userCollection->updateOne(
+        ['_id' => $userObjectId],
+        ['$push' => ['ratedBlogs' => $blogId]]
+    );
+
+    // Update the blog's rating based on the user's rating
+    $currentRating = $blog['rating'] ?? 0;
+    $ratingCount = $blog['ratingCount'] ?? 0;
+    $newRating = (($currentRating * $ratingCount) + $rating) / ($ratingCount + 1);
+    $newRating = number_format($newRating, 1, '.', ''); // Ensure 1 decimal place
+
+    $blogCollection->updateOne(
+        ['_id' => $blogObjectId],
+        [
+            '$set' => ['rating' => (float) $newRating], // Store as a float with 1 decimal point
+            '$inc' => ['ratingCount' => 1] // Increment the rating count
+        ]
+    );
+
+    // Optionally, update the blog author's rating if the user isn't the author
+    $authorId = $blog['user_id'] ?? null; // This is the ID of the blog's author
+    if ($authorId && (string) $authorId !== (string) $userObjectId) {
+        $authorCollection = $db->users;
+        $author = $authorCollection->findOne(['_id' => new ObjectId($authorId)]);
+
+        if (!$author) {
+            $authorCollection = $db->selectCollection('google-users');
+            $author = $authorCollection->findOne(['_id' => new ObjectId($authorId)]);
         }
 
-        if ($user) {
-            // Check if the user has already rated this blog
-            if (in_array($blogId, $user['ratedBlogs'] ?? [])) {
-                // User has already rated this blog
-                echo json_encode(['success' => false, 'message' => 'You have already rated this blog']);
+        if ($author) {
+            $currentAuthorRating = $author['user_rating'] ?? 0;
+            $authorRatingCount = $author['user_rating_count'] ?? 0;
+
+            $newAuthorRating = (($currentAuthorRating * $authorRatingCount) + $rating) / ($authorRatingCount + 1);
+            $newAuthorRating = number_format($newAuthorRating, 1, '.', ''); // Ensure 1 decimal place
+
+            // Update the author's rating
+            $result = $authorCollection->updateOne(
+                ['_id' => new ObjectId($authorId)],
+                [
+                    '$set' => ['user_rating' => (float) $newAuthorRating],
+                    '$inc' => ['user_rating_count' => 1]
+                ]
+            );
+
+            if ($result->getModifiedCount() == 0) {
+                echo json_encode(['success' => false, 'message' => 'Failed to update author rating.']);
                 exit();
             }
-
-            // Add the blog ID to the user's ratedBlogs array
-            $userCollection->updateOne(
-                ['_id' => $userObjectId],
-                ['$push' => ['ratedBlogs' => $blogId]]
-            );
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Author not found.']);
+            exit();
         }
-
-        // Update the blog's rating
-        $currentRating = $blog['rating'] ?? 0;
-        $ratingCount = $blog['ratingCount'] ?? 0;
-        $newRating = (($currentRating * $ratingCount) + $rating) / ($ratingCount + 1);
-
-        // Update the blog with the new rating and increment rating count
-        $collection->updateOne(
-            ['_id' => $objectId],
-            ['$set' => ['rating' => $newRating], '$inc' => ['ratingCount' => 1]]
-        );
-
-        // Update the user's rating in the 'users' or 'google-users' collection
-        $currentUserRating = $user['user_rating'] ?? 0;
-        $userRatingCount = $user['user_rating_count'] ?? 0;
-        $newUserRating = (($currentUserRating * $userRatingCount) + $rating) / ($userRatingCount + 1);
-
-        // Update the user's rating and increment rating count
-        $userCollection->updateOne(
-            ['_id' => $userObjectId],
-            ['$set' => ['user_rating' => $newUserRating], '$inc' => ['user_rating_count' => 1]]
-        );
-
-        // Respond with success message
-        echo json_encode(['success' => true]);
-
-    } catch (Exception $e) {
-        // Handle any errors
-        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Invalid input data']);
+
+    // Return success response
+    echo json_encode(['success' => true, 'message' => 'Rating submitted successfully!']);
+} catch (Exception $e) {
+    error_log('Error in addRating.php: ' . $e->getMessage());  // Log the error
+    echo json_encode(['success' => false, 'message' => 'An error occurred while submitting the rating.']);
 }
-?>
